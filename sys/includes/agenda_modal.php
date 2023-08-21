@@ -2190,13 +2190,19 @@
               		<span aria-hidden="true">&times;</span></button>
             	    <h4 class="modal-title"><b><span class="projkra_name"></span></b></h4>
           	</div>
+			<?php 
+			    $get_proj = '';
+				if(isset($_GET['id'])){
+					$get_proj = $_GET['id'];
+				}
+			?>
           	<div class="modal-body">
             	<form class="form-horizontal" method="POST" action="includes/controller.php">
             		<input type="hidden" class="projkraid" name="id">
-            		<input type="hidden" class="proj_kra_id" name="proj_id">
+            		<input type="hidden" class="proj_kra_id" name="proj_id" value="<?php echo $get_proj; ?>">
             		<div class="text-center">
 	                	<p>Are you sure want to delete KPI? </p>
-	                	<h5 class="bold projkra_name_kpi"></h5>
+	                	<h5 class="bold projkraid"></h5>
 	            	</div>
           	</div>
           	<div class="modal-footer">

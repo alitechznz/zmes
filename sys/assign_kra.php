@@ -22,27 +22,27 @@
     <!-- Main content -->
     <section class="content">
       <?php
-        if(isset($_SESSION['error'])){
-          echo "
+        if(isset($_SESSION['error'])) {
+            echo "
             <div class='alert alert-danger alert-dismissible'>
               <button type='button' class='close' data-dismiss='alert' aria-hidden='true'>&times;</button>
               <h4><i class='icon fa fa-warning'></i> Error!</h4>
               ".$_SESSION['error']."
             </div>
           ";
-          unset($_SESSION['error']);
+            unset($_SESSION['error']);
         }
-        if(isset($_SESSION['success'])){
-          echo "
+        if(isset($_SESSION['success'])) {
+            echo "
             <div class='alert alert-success alert-dismissible'>
               <button type='button' class='close' data-dismiss='alert' aria-hidden='true'>&times;</button>
               <h4><i class='icon fa fa-check'></i> Success!</h4>
               ".$_SESSION['success']."
             </div>
           ";
-          unset($_SESSION['success']);
+            unset($_SESSION['success']);
         }
-      ?>
+?>
       <div class="row">
         <div class="col-xs-12">
           <div class="box">
@@ -52,17 +52,17 @@
                      
                    </div>
                        <form action="includes/controller.php" method="post">
-                            <?php 
-                               if(isset($_GET['id'])){
-                                  $get_id = $_GET['id'];
-                              } else {
-                                  $get_id = 0;
-                              }
+                            <?php
+                         if(isset($_GET['id'])) {
+                             $get_id = $_GET['id'];
+                         } else {
+                             $get_id = 0;
+                         }
 
-                              $user_id = $_SESSION['user'];
-                              $user_org = $_SESSION['user_org'];
+                        $user_id = $_SESSION['user'];
+$user_org = $_SESSION['user_org'];
 
-                            ?>
+?>
                               <input type="hidden" class="form-control" name="project" value="<?php echo $get_id; ?>" required/>
                               <input type="hidden" class="form-control" name="user" value="<?php echo $user_id; ?>" required/>
                               <input type="hidden" class="form-control" name="organization" value="<?php echo $user_org; ?>" required/>
@@ -84,17 +84,17 @@
                                       <i class="fa fa-building"></i>
                                       </div>
                                       <select class="form-control select2" style="width: 100%;" name="activity">
-                                          <?php 
-                                              include 'includes/conn.php'; 
-                                              $query = "SELECT * FROM `project_activity` WHERE `Project`='$get_id'"; 
-                                              $result = mysqli_query($conn, $query) or die("Error : ".mysqli_error($conn));
-                                              $num = 0;
-                                              echo '<option value="0">Select...</option>';
-                                              while($row = mysqli_fetch_array($result)) {	
-                                                  echo '<option value="'.$row['activityID'].'">'.$row['Activity'].'</option>';
-                                              }  
-                                                    
-                                          ?>  
+                                          <?php
+                  include 'includes/conn.php';
+$query = "SELECT * FROM `project_activity` WHERE `Project`='$get_id'";
+$result = mysqli_query($conn, $query) or die("Error : ".mysqli_error($conn));
+$num = 0;
+echo '<option value="0">Select...</option>';
+while($row = mysqli_fetch_array($result)) {
+    echo '<option value="'.$row['activityID'].'">'.$row['Activity'].'</option>';
+}
+
+?>  
                                       </select>
                                     </div>
                                   </div>
@@ -108,17 +108,17 @@
                                       <i class="fa fa-building"></i>
                                       </div>
                                       <select class="form-control select2" style="width: 100%;" name="plan" onchange="ShowKPIvalue(this.value)" required>
-                                       <?php 
-                                                include 'includes/conn.php'; 
-                                                    $query = "SELECT * FROM `agendatb`"; 
-                                                    $result = mysqli_query($conn, $query) or die("Error : ".mysqli_error($conn));
-                                                    $num = 0;
-                                                    echo '<option value="0">Select...</option>';
-                                                    while($row = mysqli_fetch_array($result)) {	
-                                                        echo '<option value="'.$row['ID'].'">'.$row['Name'].'</option>';
-                                                    }  
-                                                    
-                                            ?>  
+                                       <?php
+      include 'includes/conn.php';
+$query = "SELECT * FROM `agendatb`";
+$result = mysqli_query($conn, $query) or die("Error : ".mysqli_error($conn));
+$num = 0;
+echo '<option value="0">Select...</option>';
+while($row = mysqli_fetch_array($result)) {
+    echo '<option value="'.$row['ID'].'">'.$row['Name'].'</option>';
+}
+
+?>  
                                         </select>
                                     </div>
                                   </div>
@@ -137,7 +137,7 @@
             
                           <div class="col-md-12">
                             <div class="modal-footer">
-                              <button type="button" class="btn btn-default btn-flat pull-left" data-dismiss="modal"><i class="fa fa-close"></i> Close</button>
+                              &nbsp;<button type="button" class="btn btn-success btn-flat pull-left" data-dismiss="modal"><i class="fa fa-edit"></i> Submit KPI</button>
                               <button type="submit" class="btn btn-primary btn-flat" name="addprojectkra"><i class="fa fa-save"></i> Save</button>
                             </div>
                           </div>
@@ -152,19 +152,19 @@
              <div class="box">
                <div class="box-body">
                   <table id="example1" class="table table-bordered">
-                <thead>
-                  <th>S.N</th>
-                  <th>Project</th>
-                  <th>Activity</th>
-                  <th>Plan</th>
-                  <th>KPI</th>
-                  <th>Action</th>
-                </thead>
-                <tbody>
+                    <thead>
+                      <th>S.N</th>
+                      <th>Project</th>
+                      <th>Activity</th>
+                      <th>Plan</th>
+                      <th>KPI</th>
+                      <th>Action</th>
+                    </thead>
+                    <tbody>
                
-                <?php 
+                <?php
                     include 'includes/conn.php';
-                    if(isset($_GET['id'])){
+                    if(isset($_GET['id'])) {
                         $get_id = $_GET['id'];
                     } else {
                         $get_id = 0;
@@ -174,27 +174,24 @@
                                 INNER JOIN projecttb ON project_kra.Project = projecttb.ID
                                 INNER JOIN agendatb ON project_kra.plan_id = agendatb.ID
                                 INNER JOIN project_activity ON project_kra.activity_id = project_activity.activityID
-                                WHERE project_kra.Project='$get_id'"; 
+                                WHERE project_kra.Project='$get_id'";
                     $result = mysqli_query($conn, $query) or die("Error : ".mysqli_error($conn));
                     $num = 0;
-                    while($row = mysqli_fetch_array($result)) {	
-                        $num +=1;
-                            echo "<tr>
-                            <td>".$num."</td>
-                            <td>".$row['pTitle']."</td>
-                            <td>".$row['Activity']."</td>
-                            <td>".$row['Name']."</td>
-                            <td>".$row['KeyArea']."</td>";
+                    while($row = mysqli_fetch_array($result)) {
+                      $num +=1;
+                      echo "<tr>
+                              <td>".$num."</td>
+                              <td>".$row['pTitle']."</td>
+                              <td>".$row['Activity']."</td>
+                              <td>".$row['Name']."</td>
+                              <td>".$row['KeyArea']."</td>";
                             echo "<td>
-                                       
-                                       
-                                         <button class='btn btn-danger btn-sm deleteprojkra btn-flat' data-id=".$row['projkraID']."><i class='fa fa-trash'></i> Delete</button>
-                                    
-                                    </td>
+                                    <button class='btn btn-danger btn-sm deleteprojkra btn-flat' data-id=".$row['projkraID']."><i class='fa fa-trash'></i> Delete</button>
+                                  </td>
                         </tr>";
                     }
-                    // <button class='btn btn-success btn-sm editprojkra btn-flat' data-id=".$row['projkraID']."><i class='fa fa-edit'></i> Edit</button>
-                    ?>
+                  // <button class='btn btn-success btn-sm editprojkra btn-flat' data-id=".$row['projkraID']."><i class='fa fa-edit'></i> Edit</button>
+                  ?>
                                             
                  
                 </tbody>
@@ -234,19 +231,20 @@ $("body").on("click", ".deleteprojkra", function(e){
 
 function getRow(id){
 	//alert('Hi ali');
-	//alert(id);
+alert(id);
   $.ajax({
     type: 'POST',
     url: 'projkra_row.php',
     data: {id:id},
     dataType: 'json',
     success: function(response){
+      alert(response);
       $('.projkraid').val(response.projkraID);
-      $('.projkra_name').html(response.pTitle);
-      $('.projkra_name_kpi').html(response.KeyArea);
-      $('#edit_projid').val(response.pTitle);
-      $('#edit_kra').val(response.KRA);
-      $('.proj_kra_id').val(response.Project);
+      // $('.projkra_name').html(response.pTitle);
+      // $('.projkra_name_kpi').html(response.KeyArea);
+      // $('#edit_projid').val(response.pTitle);
+      // $('#edit_kra').val(response.KRA);
+      // $('.proj_kra_id').val(response.Project);
      
       //$('#position_val').val(response.position_id).html(response.Status);
     //  $('#schedule_val').val(response.schedule_id).html(response.time_in+' - '+response.time_out);
