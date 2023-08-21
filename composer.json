@@ -1,0 +1,7 @@
+{
+    "require": {
+        "haruncpi/laravel-user-activity": "^1.0",
+        "mpdf/mpdf": "^8.1",
+        "chillerlan/php-qrcode": "^4.3"
+    }
+}

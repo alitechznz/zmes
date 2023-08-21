@@ -1,0 +1,114 @@
+<?php 
+                   	$rsbl=mysqli_query($db_link, $bl);
+					if($rowbl = mysqli_fetch_array($rsbl))  {
+					    $BLNm = $rowbl['BLName'];
+					    $BLNo = $rowbl['BLNo'];
+					    $BLDoc = $rowbl['BLFile'];
+					   echo "<div class='col-xs-3 bs-wizard-step complete'>";
+                          echo "<div class='text-center bs-wizard-stepnum'>Step 1&nbsp;<span style='background-color: red; color: white; border-radius: 10px; text-size: 4%;'>".$rowbl['DateReceived']."</span></div>";
+                          echo "<div class='progress'><div class='progress-bar'></div></div>";
+                          echo "<a href='#' class='bs-wizard-dot'></a>";
+                          echo "<div class='bs-wizard-info text-center'></div>";
+                       echo "</div>";
+				    	} else { 
+				    	$BLNm = '';
+					    $BLNo = '';
+					    $BLDoc = '';
+				    ?>
+                         <div class="col-xs-3 bs-wizard-step disabled">
+                          <div class="text-center bs-wizard-stepnum">Step 1&nbsp;</div>
+                          <div class="progress"><div class="progress-bar"></div></div>
+                          <a href="#" class="bs-wizard-dot"></a>
+                          <div class="bs-wizard-info text-center"></div>
+                        </div>
+                 <?php 
+					} 
+				?>
+                
+                 <?php 
+                   	$rsmanifesto=mysqli_query($db_link, $manifesto);
+					if($rowmanifesto = mysqli_fetch_array($rsmanifesto))  {
+					    $MnDate =$rowmanifesto['DateCreated'];
+					    $MnfNo = $rowmanifesto['ManifestoNo'];
+					    $MnfDo = $rowmanifesto['DONo'];
+					    $MnfDescrpt = $rowmanifesto['Description'];
+					    $Mnfbtn = 'UPDATE';
+					   echo "<div class='col-xs-3 bs-wizard-step complete'>";
+                          echo "<div class='text-center bs-wizard-stepnum'>Step 2&nbsp;<span style='background-color: red; color: white; border-radius: 10px; text-size: 4%;'>".$rowmanifesto['DateCreated']."</span></div>";
+                          echo "<div class='progress'><div class='progress-bar'></div></div>";
+                          echo "<a href='#' class='bs-wizard-dot'></a>";
+                          echo "<div class='bs-wizard-info text-center'></div>";
+                       echo "</div>";
+				    	} else { 
+				    	$MnDate = '';
+				    	$MnfNo = '';
+					    $MnfDo = '';
+					    $MnfDescrpt = '';
+					    $Mnfbtn = 'SUBMIT';
+				    ?>
+                         <div class="col-xs-3 bs-wizard-step disabled">
+                          <div class="text-center bs-wizard-stepnum">Step 2&nbsp;</div>
+                          <div class="progress"><div class="progress-bar"></div></div>
+                          <a href="#" class="bs-wizard-dot"></a>
+                          <div class="bs-wizard-info text-center"></div>
+                        </div>
+                 <?php 
+					} 
+				?>
+				
+				  <?php 
+                   	$rsassment=mysqli_query($db_link, $assment);
+					if($rowassment = mysqli_fetch_array($rsassment))  {
+					    $AssDate =$rowassment['DateIssued'];
+					    $AssDescrpt = $rowassment['Description'];
+					    $Assbtn = 'UPDATE';
+					   echo "<div class='col-xs-3 bs-wizard-step complete'>";
+                          echo "<div class='text-center bs-wizard-stepnum'>Step 3&nbsp;<span style='background-color: red; color: white; border-radius: 10px; text-size: 4%;'>".$rowassment['DateIssued']."</span></div>";
+                          echo "<div class='progress'><div class='progress-bar'></div></div>";
+                          echo "<a href='#' class='bs-wizard-dot'></a>";
+                          echo "<div class='bs-wizard-info text-center'></div>";
+                       echo "</div>";
+				    	} else { 
+				    	    $AssDate ='';
+					        $AssDescrpt = '';
+					        $Assbtn = 'SUBMIT';
+				    ?>
+                         <div class="col-xs-3 bs-wizard-step disabled">
+                          <div class="text-center bs-wizard-stepnum">Step 3&nbsp;</div>
+                          <div class="progress"><div class="progress-bar"></div></div>
+                          <a href="#" class="bs-wizard-dot"></a>
+                          <div class="bs-wizard-info text-center"></div>
+                        </div>
+                 <?php 
+					} 
+				?>
+                
+                  <?php 
+                   	$rsrelease=mysqli_query($db_link, $release);
+					if($rowrelease = mysqli_fetch_array($rsrelease))  {
+					    $RlsDate =$rowrelease['DateIssued'];
+					    $RlsDescrpt = $rowrelease['Description'];
+					    $Rlsbtn = 'UPDATE';
+					   echo "<div class='col-xs-3 bs-wizard-step complete'>";
+                          echo "<div class='text-center bs-wizard-stepnum'>Step 4&nbsp;<span style='background-color: red; color: white; border-radius: 10px; text-size: 4%;'>".$rowrelease['DateCreate']."</span></div>";
+                          echo "<div class='progress'><div class='progress-bar'></div></div>";
+                          echo "<a href='#' class='bs-wizard-dot'></a>";
+                          echo "<div class='bs-wizard-info text-center'></div>";
+                       echo "</div>";
+				    	} else { 
+				    	$RlsDate ='';
+					    $RlsDescrpt = '';
+					    $Rlsbtn = 'SUBMIT';
+				    ?>
+                         <div class="col-xs-3 bs-wizard-step disabled">
+                          <div class="text-center bs-wizard-stepnum">Step 4&nbsp;</div>
+                          <div class="progress"><div class="progress-bar"></div></div>
+                          <a href="#" class="bs-wizard-dot"></a>
+                          <div class="bs-wizard-info text-center"></div>
+                        </div>
+                 <?php 
+					} 
+				?>
+                
+                
+                

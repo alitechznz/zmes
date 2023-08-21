@@ -1,0 +1,39 @@
+[22-Dec-2020 12:30:21 UTC] PHP Warning:  mysqli::mysqli(): (HY000/1045): Access denied for user 'alitechc_zmes'@'localhost' (using password: YES) in /home/alitechc/public_html/zmes/includes/conn.php on line 2
+[22-Dec-2020 12:30:55 UTC] PHP Warning:  mysqli::mysqli(): (HY000/1045): Access denied for user 'alitechc_zmes'@'localhost' (using password: YES) in /home/alitechc/public_html/zmes/includes/conn.php on line 2
+[22-Dec-2020 12:31:03 UTC] PHP Warning:  mysqli::mysqli(): (HY000/1045): Access denied for user 'alitechc_zmes'@'localhost' (using password: YES) in /home/alitechc/public_html/zmes/includes/conn.php on line 2
+[22-Dec-2020 14:51:47 UTC] PHP Warning:  mysqli_insert_id() expects parameter 1 to be mysqli, null given in /home/alitechc/public_html/zmes/includes/controller.php on line 209
+[22-Dec-2020 14:58:41 UTC] PHP Warning:  mysqli_insert_id() expects parameter 1 to be mysqli, null given in /home/alitechc/public_html/zmes/includes/controller.php on line 209
+[23-Dec-2020 20:07:32 UTC] PHP Warning:  mysqli_insert_id() expects parameter 1 to be mysqli, null given in /home/alitechc/public_html/zmes/includes/controller.php on line 209
+[23-Dec-2020 20:09:04 UTC] PHP Warning:  mysqli_insert_id() expects parameter 1 to be mysqli, null given in /home/alitechc/public_html/zmes/includes/controller.php on line 209
+[05-Jan-2021 10:55:10 UTC] PHP Warning:  Invalid argument supplied for foreach() in /home/alitechc/public_html/zmes/includes/controller.php on line 434
+[05-Jan-2021 10:56:02 UTC] PHP Warning:  Invalid argument supplied for foreach() in /home/alitechc/public_html/zmes/includes/controller.php on line 434
+[10-Jan-2021 06:26:02 UTC] PHP Warning:  Cannot modify header information - headers already sent by (output started at /home/alitechc/public_html/zmes/includes/controller.php:538) in /home/alitechc/public_html/zmes/includes/controller.php on line 550
+[10-Jan-2021 13:59:28 UTC] PHP Warning:  Invalid argument supplied for foreach() in /home/alitechc/public_html/zmes/includes/controller.php on line 453
+[10-Jan-2021 14:00:21 UTC] PHP Warning:  Invalid argument supplied for foreach() in /home/alitechc/public_html/zmes/includes/controller.php on line 453
+[10-Jan-2021 18:52:02 UTC] PHP Warning:  Invalid argument supplied for foreach() in /home/alitechc/public_html/zmes/includes/controller.php on line 453
+[09-Feb-2021 11:20:11 UTC] PHP Warning:  Invalid argument supplied for foreach() in /home/alitechc/public_html/zmes/includes/controller.php on line 467
+[25-Aug-2022 09:01:04 UTC] PHP Warning:  Invalid argument supplied for foreach() in /home/planningznz/public_html/zmes/sys/includes/controller.php on line 796
+[26-Aug-2022 07:29:18 UTC] PHP Warning:  Invalid argument supplied for foreach() in /home/planningznz/public_html/zmes/sys/includes/controller.php on line 954
+[29-Aug-2022 07:23:40 UTC] PHP Warning:  Invalid argument supplied for foreach() in /home/planningznz/public_html/zmes/sys/includes/controller.php on line 954
+[29-Aug-2022 09:17:50 UTC] PHP Warning:  Invalid argument supplied for foreach() in /home/planningznz/public_html/zmes/sys/includes/controller.php on line 989
+[29-Aug-2022 11:55:08 UTC] PHP Warning:  Invalid argument supplied for foreach() in /home/planningznz/public_html/zmes/sys/includes/controller.php on line 954
+[29-Aug-2022 12:05:28 UTC] PHP Warning:  Invalid argument supplied for foreach() in /home/planningznz/public_html/zmes/sys/includes/controller.php on line 954
+[31-Aug-2022 06:45:53 UTC] PHP Warning:  Invalid argument supplied for foreach() in /home/planningznz/public_html/zmes/sys/includes/controller.php on line 954
+[31-Aug-2022 07:19:58 UTC] PHP Warning:  Invalid argument supplied for foreach() in /home/planningznz/public_html/zmes/sys/includes/controller.php on line 954
+[01-Sep-2022 07:10:42 UTC] PHP Warning:  Invalid argument supplied for foreach() in /home/planningznz/public_html/zmes/sys/includes/controller.php on line 796
+[01-Sep-2022 10:38:49 UTC] PHP Warning:  Invalid argument supplied for foreach() in /home/planningznz/public_html/zmes/sys/includes/controller.php on line 796
+[02-Sep-2022 07:15:10 UTC] PHP Warning:  Invalid argument supplied for foreach() in /home/planningznz/public_html/zmes/sys/includes/controller.php on line 954
+[06-Sep-2022 08:02:30 UTC] PHP Warning:  Invalid argument supplied for foreach() in /home/planningznz/public_html/zmes/sys/includes/controller.php on line 954
+[04-Oct-2022 05:35:15 UTC] PHP Warning:  Invalid argument supplied for foreach() in /home/planningznz/public_html/zmes/sys/includes/controller.php on line 954
+[14-Nov-2022 08:41:29 UTC] PHP Warning:  Invalid argument supplied for foreach() in /home/planningznz/public_html/zmes/sys/includes/controller.php on line 954
+[27-May-2023 10:42:03 UTC] PHP Warning:  Invalid argument supplied for foreach() in /home/planningznz/public_html/testzmes.planningznz.go.tz/sys/includes/controller.php on line 1094
+[27-May-2023 11:05:09 UTC] PHP Warning:  Invalid argument supplied for foreach() in /home/planningznz/public_html/testzmes.planningznz.go.tz/sys/includes/controller.php on line 1094
+[27-May-2023 11:07:32 UTC] PHP Warning:  Invalid argument supplied for foreach() in /home/planningznz/public_html/testzmes.planningznz.go.tz/sys/includes/controller.php on line 1094
+[27-May-2023 11:09:09 UTC] PHP Warning:  Invalid argument supplied for foreach() in /home/planningznz/public_html/testzmes.planningznz.go.tz/sys/includes/controller.php on line 1094
+[06-Jun-2023 10:11:09 UTC] PHP Warning:  Invalid argument supplied for foreach() in /home/planningznz/public_html/testzmes.planningznz.go.tz/sys/includes/controller.php on line 2036
+[24-Jun-2023 12:22:08 UTC] PHP Warning:  Invalid argument supplied for foreach() in /home/planningznz/public_html/testzmes.planningznz.go.tz/sys/includes/controller.php on line 2160
+[26-Jun-2023 04:55:51 UTC] PHP Fatal error:  Uncaught Error: Class 'Uuid' not found in /home/planningznz/public_html/testzmes.planningznz.go.tz/sys/includes/controller.php:1221
+Stack trace:
+#0 {main}
+  thrown in /home/planningznz/public_html/testzmes.planningznz.go.tz/sys/includes/controller.php on line 1221
+[26-Jun-2023 08:35:07 Africa/Nairobi] PHP Warning:  Cannot modify header information - headers already sent by (output started at /home/planningznz/public_html/testzmes.planningznz.go.tz/sys/includes/controller.php:1221) in /home/planningznz/public_html/testzmes.planningznz.go.tz/sys/includes/controller.php on line 1254
