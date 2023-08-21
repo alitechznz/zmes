@@ -11,7 +11,7 @@
     <!-- Content Header (Page header) -->
     <section class="content-header">
       <h1>
-      Project/Program List
+      Project/Program Lists
       </h1>
       <ol class="breadcrumb">
         <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
@@ -46,82 +46,99 @@
         <div class="col-xs-12">
           <div class="box">
              <div class="box-body">
-                 <div class="col-md-12" style="background-color:lightgray;">
-                     <div class="col-md-4">
+                 <div class="col-md-12 mb-5" style="background-color:lightgray;">
+                    <div class="row">
+                      <div class="col-md-8 row">
+                      <div class="col-md-6">
                          <div class="form-group">
-                              <label>Search By KPI :</label>
+                              <label>Search By :</label>
                               <div class="input-group">
                                       <div class="input-group-addon">
                                       <i class="fa fa-building"></i>
                                       </div>
                                       <select class="form-control select2" name="kra_search" id="kra_search" onchange="ProgramReport(this.value)">
-                                                  <?php 
-                                                include 'includes/conn.php'; 
-                                                    $query = "SELECT * FROM `keyarea`"; 
-                                                    $result = mysqli_query($conn, $query) or die("Error : ".mysqli_error($conn));
-                                                    $num = 0;
-                                                    echo '<option value="0">Select...</option>';
-                                                    while($row = mysqli_fetch_array($result)) {	
-                                                        echo '<option value="'.$row['IDNo'].'">'.$row['KeyArea'].'</option>';
-                                                    }  
-                                                    
-                                            ?>  
-                                        </select>
+                                          <option value="kpi" selected>KPI</option>
+                                          <option value="sector" selected>Sector</option>
+                                          <option value="sponsor_type" selected>Sponsor Type</option>
+                                          <option value="program" selected>Program</option>
+                                          <option value="ministry" selected>Ministry</option>
+                                          <option value="institution" selected>Institution</option>
+                                          <option value="dev_partner" selected>Development Partner</option> 
+                                      </select>
                                     </div>
                          </div>
-                     </div>
-                     <div class="col-md-4">
+                      </div>
+                  
+                      <div class="col-md-6">
                           <div class="form-group">
-                                    <label>Search by Sector :</label>
-                                    <div class="input-group">
-                                      <div class="input-group-addon">
-                                      <i class="fa fa-building"></i>
+                                      <label class="mt-5"></label>
+                                      <div class="input-group">
+                                        <div class="input-group-addon">
+                                        <i class="fa fa-building"></i>
+                                        </div>
+                                        <select class="form-control select2" name="sector_search" id="sector_search" onchange="ProgramReport(this.value)">
+                                                    <?php 
+                                                  include 'includes/conn.php'; 
+                                                      $query = "SELECT * FROM `sector`"; 
+                                                      $result = mysqli_query($conn, $query) or die("Error : ".mysqli_error($conn));
+                                                      $num = 0;
+                                                      echo '<option value="0">Select...</option>';
+                                                      while($row = mysqli_fetch_array($result)) {	
+                                                          echo '<option value="'.$row['SectorID'].'">'.$row['SectorName'].'</option>';
+                                                      }  
+                                                      
+                                              ?>  
+                                          </select>
                                       </div>
-                                      <select class="form-control select2" name="sector_search" id="sector_search" onchange="ProgramReport(this.value)">
-                                                  <?php 
-                                                include 'includes/conn.php'; 
-                                                    $query = "SELECT * FROM `sector`"; 
-                                                    $result = mysqli_query($conn, $query) or die("Error : ".mysqli_error($conn));
-                                                    $num = 0;
-                                                    echo '<option value="0">Select...</option>';
-                                                    while($row = mysqli_fetch_array($result)) {	
-                                                        echo '<option value="'.$row['SectorID'].'">'.$row['SectorName'].'</option>';
-                                                    }  
-                                                    
-                                            ?>  
-                                        </select>
                                     </div>
-                                  </div>
-                     </div>
-                     <div class="col-md-4">
-                          <div class="form-group">
-                                    <label> Search by Program :</label>
-                                    <div class="input-group">
-                                      <div class="input-group-addon">
-                                      <i class="fa fa-building"></i>
-                                      </div>
-                                      <select class="form-control select2" name="program_search" id="program_search" onchange="ProgramReport(this.value)">
-                                               <option value="0">Select</option>
+                                    <button type="submit" class="btn btn-success mb-3">Search</button>
+                          </div>     
+                      </div>
+                      <div class="col-md-4">
+                         <div class="form-group">
+                            <label>Date range :</label>
+                              <div class="input-group">
+                              <div class="input-group-addon">
+                                <i class="fa fa-calendar"></i>
+                              </div>
+                              <input type="text" class="form-control pull-right" id="reservation" onchange="ProgramReport(this.value)">
+                            </div>
+                                
+                        </div>
+
+                        <div class="form-group">
+                            <label>Budget term :</label>
+                              <div class="input-group">
+                              <div class="input-group-addon">
+                                <i class="fa fa-building"></i>
+                              </div>
+                             <select class="form-control select2" name="budgeterm_search" id="budgeterm_search" onchange="ProgramReport(this.value)">
+                                                     <option value="0">Select</option>
                                           <?php 
                                                 include 'includes/conn.php'; 
                                                 
-                                                     $query = "SELECT * FROM `projecttb` WHERE `pType`='Program'"; 
+                                                     $query = "SELECT * FROM `budgetterm`"; 
                                                      $result = mysqli_query($conn, $query) or die("Error : ".mysqli_error($conn));
                                                     $num = 0;
-                                                    echo '<option value="0">Select...</option>';
+                                                     echo '<option value="0">Select...</option>';
                                                     while($row = mysqli_fetch_array($result)) {	
-                                                        echo '<option value="'.$row['ID'].'">'.$row['pTitle'].'  ('.$row['BudgetTerm'].')</option>';
+                                                        echo '<option value="'.$row['ID'].'">'.$row['Item'].'</option>';
                                                     }  
                                                     
                                             ?>  
-                                         
                                         </select>
-                                    </div>
-                                  </div>
-                     </div>
+                            </div>
+                                
+                        </div>
+                        
+
+                      </div>
+                     
+                    </div>
+                   
                      
                  </div>
-                 <div class="col-md-12" style="background-color:lightgray;">
+                  <!-- <div class="col-md-12" style="background-color:lightgray;">
                      <div class="col-md-4">
                          <div class="form-group">
                             <label>Search by Sponser Type :</label>
@@ -138,7 +155,7 @@
                                         <option value="5">Government & Development Partners</option>
                                 </select>
                             </div>
-                            <!-- /.input group -->       
+                                
                         </div>
                      </div>
                      <div class="col-md-4">
@@ -150,7 +167,7 @@
                               </div>
                               <input type="text" class="form-control pull-right" id="reservation" onchange="ProgramReport(this.value)">
                             </div>
-                            <!-- /.input group -->       
+                                
                         </div>
                      </div>
                       <div class="col-md-4">
@@ -176,11 +193,11 @@
                                             ?>  
                                         </select>
                             </div>
-                            <!-- /.input group -->       
+                                
                         </div>
                      </div>
                       
-                 </div>
+                 </div>  -->
                  <div class="col-md-12" >
                     
                      <div class="col-md-10">
