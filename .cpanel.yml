@@ -1,0 +1,5 @@
+---
+deployment:
+  tasks:
+    - export DEPLOYPATH=/home/planningznz/public_html/zmes/
+    - /bin/cp * $DEPLOYPATH
