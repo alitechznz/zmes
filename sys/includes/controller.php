@@ -1,5 +1,6 @@
 <?php
 session_start(); 
+#GR%Sn@QaMVEe
 include 'conn.php';
 
 //add school details
@@ -280,11 +281,15 @@ elseif(isset($_POST['editmeplan'])) { //add m.e plan
     $res = mysqli_real_escape_string($conn,$_POST['responsible']);
     $project = mysqli_real_escape_string($conn,$_POST['project']);
     $planvalue = mysqli_real_escape_string($conn,$_POST['planvalue']);
+
+    $user_id = mysqli_real_escape_string($conn,$_POST['user']);
+    $org_id = mysqli_real_escape_string($conn,$_POST['organization']);
       
     $_SESSION['action'] = 'Updated project plan';
     //$_SESSION['page'] = 'Add organization';
 
-    $sql ="UPDATE `project_plan` SET `Description`='$descr', `Indicator`='$indicator', `Definition`='$definition', `Baseline`='$baseline', `Target`='$target', `Source`='$source', `Frequency`='$frequency', `Responsible`='$res', `Project`='$project', `Value`='$planvalue' WHERE `IDp`='$id'";
+    $sql ="INSERT INTO `project_plan`(`Description`, `Indicator`, `Definition`, `Baseline`, `Target`, `Source`, `Frequency`, `Responsible`, `Project`,`CreatedBy`, `org_id`) 
+                                VALUES('$descr', '$indicator', '$definition', '$baseline', '$target', '$source', '$frequency', '$res', '$project', '$user_id', '$org_id')";
 
   	if (mysqli_query($conn, $sql)) {
         $_SESSION['success'] = 'Data added successfully';  
@@ -294,7 +299,6 @@ elseif(isset($_POST['editmeplan'])) { //add m.e plan
         $_SESSION['error'] = "Error..Data not added!".mysqli_error($conn);
         $_SESSION['action'] = 'Attempt to update project plan';
         AuditActivity($_SESSION['page'], $_SESSION['action'], $_SESSION['user']);
-        // userActivity();
         $return = '../m&e.php?id='.$project;
         header('location:'.$return);  
 	}			
@@ -2558,6 +2562,136 @@ elseif(isset($_POST['addprojectkra'])) { //add national agenda
 	} else {		
         $_SESSION['error'] = "Error..Data not added!".mysqli_error($conn);
         $_SESSION['action'] = 'Attempt to save project kra';
+        AuditActivity($_SESSION['page'], $_SESSION['action'], $_SESSION['user']);
+         $return = '../assign_kra.php?id='.$projid;
+        header('location:'.$return);
+	}			
+}
+
+elseif(isset($_POST['submitprojectkra'])) { //add national agenda
+    $projid = $_POST['project'];
+    $user =$_POST['user'];
+    $submit_reason =$_POST['submit_reason'];
+    $date = date("Y-m-d h:i:s");
+
+    $_SESSION['action'] = 'Submit project KPI';
+
+
+    $sql ="INSERT INTO `mon_form_approval`(`report_type`, `project_id`, `submit_by`, `submit_status`, `submit_date`, `submit_comment`) 
+                VALUES('KPI', '$projid', '$user', '1', '$date', '$submit_reason')";
+
+  	if (mysqli_query($conn, $sql)) {
+        $_SESSION['success'] = 'Data added successfully';  
+        AuditActivity($_SESSION['page'], $_SESSION['action'], $_SESSION['user']);
+        
+        $return = '../assign_kra.php?id='.$projid;
+        header('location:'.$return);
+       // header("location: ../program.php?xyz=md5($id)");   
+	} else {		
+        $_SESSION['error'] = "Error..Data not added!".mysqli_error($conn);
+        $_SESSION['action'] = 'Attempt to save project kra';
+        AuditActivity($_SESSION['page'], $_SESSION['action'], $_SESSION['user']);
+         $return = '../assign_kra.php?id='.$projid;
+        header('location:'.$return);
+	}			
+}
+
+elseif(isset($_POST['kpimonaccept'])) { //add national agenda
+    $projid = $_POST['project'];
+    $user =$_POST['user'];
+    $monitoring_id = $_POST['monitoring_id'];
+    $accept_action = $_POST['accept_action'];
+
+    $accept_reason =$_POST['accept_reason'];
+    $date = date("Y-m-d h:i:s");
+
+    $_SESSION['action'] = 'Acceptance project';
+
+    if($approve_action == 0){
+        $sql ="UPDATE `mon_form_approval` SET `accept_by`='$user',`accept_status`='$accept_action',`submit_status`='0',
+            `approve_status`='0', `confirm_status`='0',`accept_comment`='$accept_reason', `approve_date`='$date', `repeat_status`='0' WHERE `approval_id`='$monitoring_id'";
+    } else {
+        $sql ="UPDATE `mon_form_approval` SET `accept_by`='$user',`accept_status`='$accept_action',
+            `accept_comment`='$accept_reason', `approve_date`='$date' WHERE `approval_id`='$monitoring_id'";
+    }
+    
+
+  	if (mysqli_query($conn, $sql)) {
+        $_SESSION['success'] = 'Data updated successfully';  
+        AuditActivity($_SESSION['page'], $_SESSION['action'], $_SESSION['user']);
+        $return = '../assign_kra.php?id='.$projid;
+        header('location:'.$return);
+	} else {		
+        $_SESSION['error'] = "Error..Data not added!".mysqli_error($conn);
+        $_SESSION['action'] = 'Attempt to accept project';
+        AuditActivity($_SESSION['page'], $_SESSION['action'], $_SESSION['user']);
+         $return = '../assign_kra.php?id='.$projid;
+        header('location:'.$return);
+	}			
+}
+
+elseif(isset($_POST['kpimonapprove'])) { //add national agenda
+    $projid = $_POST['project'];
+    $user =$_POST['user'];
+    $monitoring_id = $_POST['monitoring_id'];
+    $approve_action = $_POST['approve_action'];
+
+    $approve_reason =$_POST['approve_reason'];
+    $date = date("Y-m-d h:i:s");
+
+    $_SESSION['action'] = 'Approval project KPI';
+
+    if($approve_action == 0){
+        $sql ="UPDATE `mon_form_approval` SET `approve_by`='$user',`approve_status`='$approve_action',`submit_status`='0',
+            `approve_comment`='$approve_reason',`approve_date`='$date', `repeat_status`='0' WHERE `approval_id`='$monitoring_id'";
+    } else {
+        $sql ="UPDATE `mon_form_approval` SET `approve_by`='$user',`approve_status`='$approve_action',
+            `approve_comment`='$approve_reason',`approve_date`='$date' WHERE `approval_id`='$monitoring_id'";
+    }
+    
+
+  	if (mysqli_query($conn, $sql)) {
+        $_SESSION['success'] = 'Data updated successfully';  
+        AuditActivity($_SESSION['page'], $_SESSION['action'], $_SESSION['user']);
+        $return = '../assign_kra.php?id='.$projid;
+        header('location:'.$return);
+	} else {		
+        $_SESSION['error'] = "Error..Data not added!".mysqli_error($conn);
+        $_SESSION['action'] = 'Attempt to approve project KPI';
+        AuditActivity($_SESSION['page'], $_SESSION['action'], $_SESSION['user']);
+         $return = '../assign_kra.php?id='.$projid;
+        header('location:'.$return);
+	}			
+}
+
+elseif(isset($_POST['kpimonconfirm'])) { //add national agenda
+    $projid = $_POST['project'];
+    $user =$_POST['user'];
+    $monitoring_id = $_POST['monitoring_id'];
+    $confirm_action = $_POST['confirm_action'];
+    $confirm_reason =$_POST['confirm_reason'];
+    $date = date("Y-m-d h:i:s");
+
+    $_SESSION['action'] = 'Confirm project KPI';
+
+    if($confirm_action == 0){
+        $sql ="UPDATE `mon_form_approval` SET `confirm_by`='$user',`submit_status`='0',`approve_status`='0', `repeat_status`='0'
+                    `confirm_status`='$confirm_action',`confirm_comment`='$confirm_reason',`confirm_date`='$date'
+                    WHERE `approval_id`='$monitoring_id'";
+    } else {
+        $sql ="UPDATE `mon_form_approval` SET `confirm_by`='$user',
+                    `confirm_status`='$confirm_action',`confirm_comment`='$confirm_reason',`confirm_date`='$date'
+                    WHERE `approval_id`='$monitoring_id'";
+    }
+    
+  	if (mysqli_query($conn, $sql)) {
+        $_SESSION['success'] = 'Data updated successfully';  
+        AuditActivity($_SESSION['page'], $_SESSION['action'], $_SESSION['user']);
+        $return = '../assign_kra.php?id='.$projid;
+        header('location:'.$return);
+	} else {		
+        $_SESSION['error'] = "Error..Data not added!".mysqli_error($conn);
+        $_SESSION['action'] = 'Attempt to confirm project KPI';
         AuditActivity($_SESSION['page'], $_SESSION['action'], $_SESSION['user']);
          $return = '../assign_kra.php?id='.$projid;
         header('location:'.$return);

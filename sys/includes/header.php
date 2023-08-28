@@ -332,6 +332,8 @@ $.ajax({
             xmlhttp.send();
         }
     }
+
+    
     
     function ShowStrategyArea(str){
         if (str == "") {

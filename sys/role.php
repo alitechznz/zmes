@@ -383,7 +383,7 @@ function SelectAll(source) {
                                                                         <input type="checkbox" id="basic_checkbox_mp3s3" class="chkbx monitor" name="role[]" value="mon_workplan"/>
                                                                         <label for="basic_checkbox_mp3s3" style="min-width: 100px;">Workplan</label>
                                                                         <input type="checkbox" id="basic_checkbox_mp3s3" class="chkbx monitor" name="role[]" value="mon_kra"/>
-                                                                        <label for="basic_checkbox_mp3s3" style="min-width: 100px;">KRA</label>
+                                                                        <label for="basic_checkbox_mp3s3" style="min-width: 100px;">KPI</label>
                                                                          <input type="checkbox" id="basic_checkbox_mp3s3" class="chkbx monitor" name="role[]" value="mon_resource"/>
                                                                         <label for="basic_checkbox_mp3s3" style="min-width: 100px;">Resource Tracking</label>
                                                                         <input type="checkbox" id="basic_checkbox_mp3s3" class="chkbx monitor" name="role[]" value="mon_quarter"/>

@@ -583,7 +583,7 @@ if($user_role = mysqli_fetch_array($result)) {
                                                                         } else {
                                                                             echo '<input type="checkbox" id="basic1_checkbox_mp3s3" class="uchkbx umonitor" name="role[]" value="mon_kra"/>';
                                                                         }
-                                                                        echo '<label for="basic1_checkbox_mp3s3" style="min-width: 100px;">KRA</label>';
+                                                                        echo '<label for="basic1_checkbox_mp3s3" style="min-width: 100px;">KPI</label>';
                                                                         if(strpos($user_role['Permission'], 'mon_kra') !== false) {
                                                                             echo '<input type="checkbox" id="basic1_checkbox_mp3s3" class="uchkbx umonitor" name="role[]" value="mon_resource" checked/>';
                                                                         } else {

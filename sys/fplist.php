@@ -115,7 +115,7 @@
                     $monitoring_form_status = strtotime($monitoring_form_status) - strtotime($currentDate);
                     $monitoring_form_status = round($monitoring_form_status / 86400);
              
-                  if($user_role['Name']=="Focal Person"){
+                  if($user_role['Name']=="Focal Person" || $user_role['Name']=="DPPR" || $user_role['Name']=="Principle Secretary"){
                     $query_yake = "SELECT * FROM `project_targetgroup` WHERE `Institution` ='$user_org' OR `FocalPerson` ='$user_id'"; 
                     $result_yake = mysqli_query($conn, $query_yake) or die("Error : ".mysqli_error($conn));
                     $num = 0;
@@ -133,7 +133,7 @@
                                       
                                       $getID = $row['ID'];
                                       $progress = 0;
-                                      $queryp = "SELECT * FROM `project_progress` WHERE `Project` =' $getID'"; 
+                                      $queryp = "SELECT * FROM `project_progress` WHERE `Project` ='$getID'"; 
                                       $resultp = mysqli_query($conn, $queryp) or die("Error : ".mysqli_error($conn));
                                       if($rowp = mysqli_fetch_array($resultp)) {	
                                           $progress = $rowp['Progress'];
@@ -218,40 +218,40 @@
                                        
 
                                        
-                                              if(strpos($user_role['Permission'], 'mon_kra') !== false) {
+                                              // if(strpos($user_role['Permission'], 'mon_kra') !== false) {
                                                   if($kpi_status >= 0){
                                                     echo " <a href='assign_kra.php?id=".$row['ID']."' class='btn btn-info btn-sm btn-flat'><i class='fa fa-edit'></i> KPI</a>";
                                                   } 
-                                              }
-                                              if(strpos($user_role['Permission'], 'mon_workplan') !== false) {
+                                              // }
+                                              // if(strpos($user_role['Permission'], 'mon_workplan') !== false) {
                                                   if($plan_status >= 0){
                                                     echo "<a href='m&e.php?id=".$row['ID']."'><button class='btn btn-success btn-sm btn-flat'><i class='fa fa-edit'></i> M&E Plan</button></a>";
                                                   }
-                                              }
+                                              // }
 
-                                              if(strpos($user_role['Permission'], 'mon_resource') !== false) {
+                                              // if(strpos($user_role['Permission'], 'mon_resource') !== false) {
                                                 if($resource_status >= 0){
                                                   echo "<a href='resource.php?id=".$row['ID']."'><button class='btn btn-warning btn-sm btn-flat'><i class='fa fa-folder'></i> Resource</button></a>";
                                                 }
-                                              }
+                                              // }
 
-                                              if(strpos($user_role['Permission'], 'mon_quarter') !== false) {
+                                              // if(strpos($user_role['Permission'], 'mon_quarter') !== false) {
                                                 if($quartely_status >= 0){
                                                   echo "<a href='quartely.php?id=".$row['ID']."'> <button class='btn btn-info btn-sm btn-flat'><i class='fa fa-file'></i> Quarter Report</button></a>";
                                                 }
-                                              }
+                                              // }
 
-                                              if(strpos($user_role['Permission'], 'mon_annual') !== false) {
+                                              // if(strpos($user_role['Permission'], 'mon_annual') !== false) {
                                                 if($annual_status >= 0){  
                                                   echo "<a href='annual.php?id=".$row['ID']."'><button class='btn btn-primary btn-sm btn-flat'><i class='fa fa-file'></i> Annual Reports</button></a>";
                                                 }
-                                              }
+                                              // }
 
-                                              if(strpos($user_role['Permission'], 'mon_monitor') !== false) {
+                                              // if(strpos($user_role['Permission'], 'mon_monitor') !== false) {
                                                 if($monitoring_form_status >= 0){ 
                                                   echo "<a href='monitoring.php?id=".$row['ID']."'> <button class='btn btn-danger btn-sm btn-flat'><i class='fa fa-file'></i> Monitoring Form</button></a>";
                                                 }
-                                              }
+                                              // }
 
                                               if(strpos($user_role['Permission'], 'mon_report') !== false) {
                                                   echo "<a href='fplist_mon.php?id=".$row['ID']."'> <button class='btn btn-success btn-sm btn-flat'><i class='fa fa-file'></i> Reports</button></a>";
@@ -262,16 +262,7 @@
       
                                               }
 
-                                              if(strpos($user_role['Permission'], 'mon_report') !== false) {
-                                                echo "<a href='fplist_mon.php?id=".$row['ID']."'> <button class='btn btn-success btn-sm btn-flat'><i class='fa fa-file'></i> Approve</button></a>";
-                                              }
-                                              if(strpos($user_role['Permission'], 'mon_report') !== false) {
-                                                echo "<a href='fplist_mon.php?id=".$row['ID']."'> <button class='btn btn-success btn-sm btn-flat'><i class='fa fa-file'></i> Confirm</button></a>";
-                                              }
-                                              if(strpos($user_role['Permission'], 'mon_report') !== false) {
-                                                echo "<a href='fplist_mon.php?id=".$row['ID']."'> <button class='btn btn-success btn-sm btn-flat'><i class='fa fa-file'></i> Accept</button></a>";
-                                              }
-                                              
+                                             
                                        
                                           echo
                                               "</td>
@@ -425,65 +416,41 @@
                                           echo "</td>
                                     <td>"; 
                                    
-                                          if(strpos($user_role['Permission'], 'mon_kra') !== false) {
+                                          // if(strpos($user_role['Permission'], 'mon_kra') !== false) {
                                             if($kpi_status >= 0){
                                               echo " <a href='assign_kra.php?id=".$row['ID']."' class='btn btn-info btn-sm btn-flat'><i class='fa fa-edit'></i> KPI</a>";
                                             }
-                                          }
+                                          // }
 
-                                          if(strpos($user_role['Permission'], 'mon_workplan') !== false) {
+                                          // if(strpos($user_role['Permission'], 'mon_workplan') !== false) {
                                             if($plan_status >= 0){
                                               echo "<a href='m&e.php?id=".$row['ID']."'><button class='btn btn-success btn-sm btn-flat'><i class='fa fa-edit'></i> M&E Plan</button></a>";
                                             }
-                                          }
+                                          // }
 
-                                          if(strpos($user_role['Permission'], 'mon_resource') !== false) {
+                                          // if(strpos($user_role['Permission'], 'mon_resource') !== false) {
                                             if($resource_status >= 0){
-                                              echo "<a href='resource.php?id=".$row['ID']."'><button class='btn btn-warning btn-sm btn-flat'><i class='fa fa-folder'></i> Resource</button></a>";
+                                              echo "<a href='resource.php?id=".$row['ID']."'><button class='btn btn-warning btn-sm btn-flat'><i class='fa fa-edit'></i> Resource</button></a>";
                                             }
-                                          }
+                                          // }
 
-                                          if(strpos($user_role['Permission'], 'mon_quarter') !== false) {
+                                          // if(strpos($user_role['Permission'], 'mon_quarter') !== false) {
                                             if($quartely_status >= 0){
-                                                echo "<a href='quartely.php?id=".$row['ID']."'> <button class='btn btn-info btn-sm btn-flat'><i class='fa fa-file'></i> Quarter Report</button></a>";
+                                                echo "<a href='quartely.php?id=".$row['ID']."'> <button class='btn btn-info btn-sm btn-flat'><i class='fa fa-edit'></i> Quarter Report</button></a>";
                                             }
-                                          }
+                                          // }
 
-                                          if(strpos($user_role['Permission'], 'mon_annual') !== false) {
+                                          // if(strpos($user_role['Permission'], 'mon_annual') !== false) {
                                             if($annual_status >= 0){
-                                              echo "<a href='annual.php?id=".$row['ID']."'><button class='btn btn-primary btn-sm btn-flat'><i class='fa fa-file'></i> Annual Reports</button></a>";
+                                              echo "<a href='annual.php?id=".$row['ID']."'><button class='btn btn-primary btn-sm btn-flat'><i class='fa fa-edit'></i> Annual Reports</button></a>";
                                             }
-                                          }
+                                          // }
 
-                                          if(strpos($user_role['Permission'], 'mon_monitor') !== false) {
+                                          // if(strpos($user_role['Permission'], 'mon_monitor') !== false) {
                                             if($monitoring_form_status >= 0){  
                                               echo "<a href='monitoring.php?id=".$row['ID']."'> <button class='btn btn-danger btn-sm btn-flat'><i class='fa fa-file'></i> Monitoring Form</button></a>";
                                             }
-                                          }
-
-                                          if(strpos($user_role['Permission'], 'mon_submit') !== false) {
-                                            if($monitoring_form_status >= 0){  
-                                              echo "<a href='monitoring.php?id=".$row['ID']."'> <button class='btn btn-success btn-sm btn-flat'><i class='fa fa-file'></i> Submit Report</button></a>";
-                                            }
-                                          }
-
-                                          if(strpos($user_role['Permission'], 'mon_verify') !== false) {
-                                            if($monitoring_form_status >= 0){  
-                                              echo "<a href='monitoring.php?id=".$row['ID']."'> <button class='btn btn-success btn-sm btn-flat'><i class='fa fa-file'></i> Approve Report</button></a>";
-                                            }
-                                          }
-
-                                          if(strpos($user_role['Permission'], 'mon_confirm') !== false) {
-                                            if($monitoring_form_status >= 0){  
-                                              echo "<a href='monitoring.php?id=".$row['ID']."'> <button class='btn btn-success btn-sm btn-flat'><i class='fa fa-file'></i> Confirm Report</button></a>";
-                                            }
-                                          }
-
-                                          if(strpos($user_role['Permission'], 'mon_accept') !== false) {
-                                            if($monitoring_form_status >= 0){  
-                                              echo "<a href='monitoring.php?id=".$row['ID']."'> <button class='btn btn-success btn-sm btn-flat'><i class='fa fa-file'></i> ZPC Accept Report</button></a>";
-                                            }
-                                          }
+                                        
 
                                           if(strpos($user_role['Permission'], 'mon_report') !== false) {
                                             echo "<a href='fplist_mon.php?id=".$row['ID']."'> <button class='btn btn-success btn-sm btn-flat'><i class='fa fa-file'></i> Reports</button></a>";
@@ -493,16 +460,7 @@
                                               echo "<a href='monitoring.php?id=".$row['ID']."'> <button class='btn btn-success btn-sm btn-flat'><i class='fa fa-edit'></i> Request Report</button></a>";
                                           }
 
-                                          if(strpos($user_role['Permission'], 'mon_report') !== false) {
-                                            echo "<a href='fplist_mon.php?id=".$row['ID']."'> <button class='btn btn-success btn-sm btn-flat'><i class='fa fa-file'></i> Approve</button></a>";
-                                          }
-                                          if(strpos($user_role['Permission'], 'mon_report') !== false) {
-                                            echo "<a href='fplist_mon.php?id=".$row['ID']."'> <button class='btn btn-success btn-sm btn-flat'><i class='fa fa-file'></i> Confirm</button></a>";
-                                          }
-                                          if(strpos($user_role['Permission'], 'mon_report') !== false) {
-                                            echo "<a href='fplist_mon.php?id=".$row['ID']."'> <button class='btn btn-success btn-sm btn-flat'><i class='fa fa-file'></i> Accept</button></a>";
-                                          }
-                                          
+                                        
                                     
                                       echo
                                           "</td>
