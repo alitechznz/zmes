@@ -270,7 +270,7 @@ elseif(isset($_POST['addmeplan'])) { //add m.e plan
 }
 
 elseif(isset($_POST['editmeplan'])) { //add m.e plan
-    $id = $_POST['id'];
+    // $id = $_POST['id'];
     $descr =mysqli_real_escape_string($conn,$_POST['description']);
     $indicator =mysqli_real_escape_string($conn,$_POST['indicator']);
     $definition = mysqli_real_escape_string($conn,$_POST['definition']);
@@ -288,8 +288,8 @@ elseif(isset($_POST['editmeplan'])) { //add m.e plan
     $_SESSION['action'] = 'Updated project plan';
     //$_SESSION['page'] = 'Add organization';
 
-    $sql ="INSERT INTO `project_plan`(`Description`, `Indicator`, `Definition`, `Baseline`, `Target`, `Source`, `Frequency`, `Responsible`, `Project`,`CreatedBy`, `org_id`) 
-                                VALUES('$descr', '$indicator', '$definition', '$baseline', '$target', '$source', '$frequency', '$res', '$project', '$user_id', '$org_id')";
+    $sql ="INSERT INTO `project_plan`(`Value`, `Description`, `Indicator`, `Definition`, `Baseline`, `Target`, `Source`, `Frequency`, `Responsible`, `Project`,`CreatedBy`, `org_id`) 
+                                VALUES('$planvalue', '$descr', '$indicator', '$definition', '$baseline', '$target', '$source', '$frequency', '$res', '$project', '$user_id', '$org_id')";
 
   	if (mysqli_query($conn, $sql)) {
         $_SESSION['success'] = 'Data added successfully';  
@@ -2271,9 +2271,18 @@ elseif(isset($_POST['change_password'])){
             header("location: ../change_password.php");	
         }else{
             $new_pdf = md5($password);
+            // Generate a unique verification code (you can use a library to generate secure tokens)
+            $verificationCode = bin2hex(random_bytes(16));
+            // Store the verification code in your database along with user details
+            // Send a verification email to the user
+            $subject = 'Verify Your Email';
+            $message = "Click the following link to verify your email: http://yourwebsite.com/verify.php?code=$verificationCode";
+            $headers = 'From: engineerbably@gmail.com';
+            mail($email, $subject, $message, $headers);
+
             $sql ="UPDATE `userinfo` SET `Password`='$new_pdf' WHERE `Email`='$email'";
             	if (mysqli_query($conn, $sql)) {
-            	    $_SESSION['error'] = "Password is successfully changed!";
+            	    $_SESSION['success'] = "Password is successfully changed!";
                     $_SESSION['action'] = 'Changed a password';
                     AuditActivity($_SESSION['page'], $_SESSION['action'], $_SESSION['user']);
                     header("location: ../home.php");	
@@ -2571,27 +2580,39 @@ elseif(isset($_POST['addprojectkra'])) { //add national agenda
 elseif(isset($_POST['submitprojectkra'])) { //add national agenda
     $projid = $_POST['project'];
     $user =$_POST['user'];
+    $re_type = $_POST['report_type'];
     $submit_reason =$_POST['submit_reason'];
     $date = date("Y-m-d h:i:s");
-
     $_SESSION['action'] = 'Submit project KPI';
+
+    if($re_type =='KPI'){
+        $return = '../assign_kra.php?id='.$projid;
+    } elseif($re_type =='MEPlan'){
+        $return = '../m&e.php?id='.$projid;
+    } elseif($re_type =='Resource'){
+        $return = '../resource.php?id='.$projid;
+    } elseif($re_type =='Quartely'){
+        $return = '../quartely.php?id='.$projid;
+    } elseif($re_type =='Annual'){
+        $return = '../annual.php?id='.$projid;
+    } elseif($re_type =='Monitoring Form'){
+        $return = '../monitoring.php?id='.$projid;
+    }
 
 
     $sql ="INSERT INTO `mon_form_approval`(`report_type`, `project_id`, `submit_by`, `submit_status`, `submit_date`, `submit_comment`) 
-                VALUES('KPI', '$projid', '$user', '1', '$date', '$submit_reason')";
+                VALUES('$re_type', '$projid', '$user', '1', '$date', '$submit_reason')";
 
   	if (mysqli_query($conn, $sql)) {
         $_SESSION['success'] = 'Data added successfully';  
         AuditActivity($_SESSION['page'], $_SESSION['action'], $_SESSION['user']);
-        
-        $return = '../assign_kra.php?id='.$projid;
         header('location:'.$return);
        // header("location: ../program.php?xyz=md5($id)");   
 	} else {		
         $_SESSION['error'] = "Error..Data not added!".mysqli_error($conn);
         $_SESSION['action'] = 'Attempt to save project kra';
         AuditActivity($_SESSION['page'], $_SESSION['action'], $_SESSION['user']);
-         $return = '../assign_kra.php?id='.$projid;
+        //  $return = '../assign_kra.php?id='.$projid;
         header('location:'.$return);
 	}			
 }
@@ -2599,11 +2620,26 @@ elseif(isset($_POST['submitprojectkra'])) { //add national agenda
 elseif(isset($_POST['kpimonaccept'])) { //add national agenda
     $projid = $_POST['project'];
     $user =$_POST['user'];
+    $re_type = $_POST['report_type'];
     $monitoring_id = $_POST['monitoring_id'];
     $accept_action = $_POST['accept_action'];
 
     $accept_reason =$_POST['accept_reason'];
     $date = date("Y-m-d h:i:s");
+
+    if($re_type =='KPI'){
+        $return = '../assign_kra.php?id='.$projid;
+    } elseif($re_type =='MEPlan'){
+        $return = '../m&e.php?id='.$projid;
+    } elseif($re_type =='Resource'){
+        $return = '../resource.php?id='.$projid;
+    } elseif($re_type =='Quartely'){
+        $return = '../quartely.php?id='.$projid;
+    } elseif($re_type =='Annual'){
+        $return = '../annual.php?id='.$projid;
+    } elseif($re_type =='Monitoring Form'){
+        $return = '../monitoring.php?id='.$projid;
+    }
 
     $_SESSION['action'] = 'Acceptance project';
 
@@ -2619,13 +2655,13 @@ elseif(isset($_POST['kpimonaccept'])) { //add national agenda
   	if (mysqli_query($conn, $sql)) {
         $_SESSION['success'] = 'Data updated successfully';  
         AuditActivity($_SESSION['page'], $_SESSION['action'], $_SESSION['user']);
-        $return = '../assign_kra.php?id='.$projid;
+        // $return = '../assign_kra.php?id='.$projid;
         header('location:'.$return);
 	} else {		
         $_SESSION['error'] = "Error..Data not added!".mysqli_error($conn);
         $_SESSION['action'] = 'Attempt to accept project';
         AuditActivity($_SESSION['page'], $_SESSION['action'], $_SESSION['user']);
-         $return = '../assign_kra.php?id='.$projid;
+        //  $return = '../assign_kra.php?id='.$projid;
         header('location:'.$return);
 	}			
 }
@@ -2633,11 +2669,26 @@ elseif(isset($_POST['kpimonaccept'])) { //add national agenda
 elseif(isset($_POST['kpimonapprove'])) { //add national agenda
     $projid = $_POST['project'];
     $user =$_POST['user'];
+    $re_type = $_POST['report_type'];
     $monitoring_id = $_POST['monitoring_id'];
     $approve_action = $_POST['approve_action'];
 
     $approve_reason =$_POST['approve_reason'];
     $date = date("Y-m-d h:i:s");
+
+    if($re_type =='KPI'){
+        $return = '../assign_kra.php?id='.$projid;
+    } elseif($re_type =='MEPlan'){
+        $return = '../m&e.php?id='.$projid;
+    } elseif($re_type =='Resource'){
+        $return = '../resource.php?id='.$projid;
+    } elseif($re_type =='Quartely'){
+        $return = '../quartely.php?id='.$projid;
+    } elseif($re_type =='Annual'){
+        $return = '../annual.php?id='.$projid;
+    } elseif($re_type =='Monitoring Form'){
+        $return = '../monitoring.php?id='.$projid;
+    }
 
     $_SESSION['action'] = 'Approval project KPI';
 
@@ -2653,13 +2704,13 @@ elseif(isset($_POST['kpimonapprove'])) { //add national agenda
   	if (mysqli_query($conn, $sql)) {
         $_SESSION['success'] = 'Data updated successfully';  
         AuditActivity($_SESSION['page'], $_SESSION['action'], $_SESSION['user']);
-        $return = '../assign_kra.php?id='.$projid;
+        // $return = '../assign_kra.php?id='.$projid;
         header('location:'.$return);
 	} else {		
         $_SESSION['error'] = "Error..Data not added!".mysqli_error($conn);
         $_SESSION['action'] = 'Attempt to approve project KPI';
         AuditActivity($_SESSION['page'], $_SESSION['action'], $_SESSION['user']);
-         $return = '../assign_kra.php?id='.$projid;
+        //  $return = '../assign_kra.php?id='.$projid;
         header('location:'.$return);
 	}			
 }
@@ -2667,10 +2718,25 @@ elseif(isset($_POST['kpimonapprove'])) { //add national agenda
 elseif(isset($_POST['kpimonconfirm'])) { //add national agenda
     $projid = $_POST['project'];
     $user =$_POST['user'];
+    $re_type = $_POST['report_type'];
     $monitoring_id = $_POST['monitoring_id'];
     $confirm_action = $_POST['confirm_action'];
     $confirm_reason =$_POST['confirm_reason'];
     $date = date("Y-m-d h:i:s");
+
+    if($re_type =='KPI'){
+        $return = '../assign_kra.php?id='.$projid;
+    } elseif($re_type =='MEPlan'){
+        $return = '../m&e.php?id='.$projid;
+    } elseif($re_type =='Resource'){
+        $return = '../resource.php?id='.$projid;
+    } elseif($re_type =='Quartely'){
+        $return = '../quartely.php?id='.$projid;
+    } elseif($re_type =='Annual'){
+        $return = '../annual.php?id='.$projid;
+    } elseif($re_type =='Monitoring Form'){
+        $return = '../monitoring.php?id='.$projid;
+    }
 
     $_SESSION['action'] = 'Confirm project KPI';
 
@@ -2687,13 +2753,13 @@ elseif(isset($_POST['kpimonconfirm'])) { //add national agenda
   	if (mysqli_query($conn, $sql)) {
         $_SESSION['success'] = 'Data updated successfully';  
         AuditActivity($_SESSION['page'], $_SESSION['action'], $_SESSION['user']);
-        $return = '../assign_kra.php?id='.$projid;
+        // $return = '../assign_kra.php?id='.$projid;
         header('location:'.$return);
 	} else {		
         $_SESSION['error'] = "Error..Data not added!".mysqli_error($conn);
         $_SESSION['action'] = 'Attempt to confirm project KPI';
         AuditActivity($_SESSION['page'], $_SESSION['action'], $_SESSION['user']);
-         $return = '../assign_kra.php?id='.$projid;
+        //  $return = '../assign_kra.php?id='.$projid;
         header('location:'.$return);
 	}			
 }

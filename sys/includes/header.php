@@ -431,31 +431,7 @@ $.ajax({
         }
     }
 
-function ShowPlanValue(str) {
-         //alert(str);
-         var proj = document.getElementById("project_idp").value;
-        // alert(proj);
-                if (str == "") {
-                    document.getElementById("planidvalue").innerHTML = "";
-                    return;
-                } else {
-                    if (window.XMLHttpRequest) {
-                        // code for IE7+, Firefox, Chrome, Opera, Safari
-                        xmlhttp = new XMLHttpRequest();
-                    } else {
-                        // code for IE6, IE5
-                        xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
-                    }
-                    xmlhttp.onreadystatechange = function() {
-                        if (this.readyState == 4 && this.status == 200) {
-                            document.getElementById("planidvalue").innerHTML = this.responseText;
-                        }
-                    };
-                    xmlhttp.open("GET","getplanvalue.php?q="+str+"&p="+proj,true);
-                    xmlhttp.send();
-                }
-       
-}
+
 
 function ProgramReport(str) {
          var kra_search = document.getElementById("kra_search").value;

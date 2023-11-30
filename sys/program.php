@@ -55,44 +55,44 @@
     <!-- Main content -->
     <section class="content">
       <?php
-        if(isset($_SESSION['error'])){
-          echo "
+        if(isset($_SESSION['error'])) {
+            echo "
             <div class='alert alert-danger alert-dismissible'>
               <button type='button' class='close' data-dismiss='alert' aria-hidden='true'>&times;</button>
               <h4><i class='icon fa fa-warning'></i> Error!</h4>
-              ".$_SESSION['error']."
+              " . $_SESSION['error'] . "
             </div>
           ";
-          unset($_SESSION['error']);
+            unset($_SESSION['error']);
         }
-        if(isset($_SESSION['success'])){
-          echo "
+        if(isset($_SESSION['success'])) {
+            echo "
             <div class='alert alert-success alert-dismissible'>
               <button type='button' class='close' data-dismiss='alert' aria-hidden='true'>&times;</button>
               <h4><i class='icon fa fa-check'></i> Success!</h4>
-              ".$_SESSION['success']."
+              " . $_SESSION['success'] . "
             </div>
           ";
-          unset($_SESSION['success']);
+            unset($_SESSION['success']);
         }
-      ?>
+?>
       <?php include 'progress.php'; ?>
       
-        <?php 
-            include 'includes/conn.php'; 
-                $ptitle ="";
-                $status ="";
-                $query = "SELECT * FROM `projecttb` WHERE `ID`='$getid'"; 
-                $result = mysqli_query($conn, $query) or die("Error : ".mysqli_error($conn));
-                $num = 0;
-                if($row = mysqli_fetch_array($result)) {	
-                   $ptitle =$row['pTitle'];
-                   $status = $row['Status'];
-                }  
-                
-             
-                                                    
-        ?>  
+        <?php
+      include 'includes/conn.php';
+$ptitle = "";
+$status = "";
+$query = "SELECT * FROM `projecttb` WHERE `ID`='$getid'";
+$result = mysqli_query($conn, $query) or die("Error : " . mysqli_error($conn));
+$num = 0;
+if($row = mysqli_fetch_array($result)) {
+    $ptitle = $row['pTitle'];
+    $status = $row['Status'];
+}
+
+
+
+?>  
       <!-- ------->
     <div class="row">
         <div class="col-xs-12">
@@ -114,49 +114,49 @@
                           <input name="userID" value="<?php  echo $user['id']; ?>" type="hidden" />
                           <input name="orgID" value="<?php  echo $user['Organization']; ?>" type="hidden" />
                           
-                          <?php 
-                            if(!isset($user_id['groupID'])){
-                                $user_id['groupID'] = 0;
-                            }
-                           ?>
+                          <?php
+                    if(!isset($user_id['groupID'])) {
+                        $user_id['groupID'] = 0;
+                    }
+?>
                             <input name="groupID" value="<?php  echo $user['groupID']; ?>" type="hidden" />
-                            <?php 
-                                include 'includes/conn.php'; 
-                                 if(isset($_GET['xyz'])){
-                            		   $getid =$_GET['xyz'];
-                            		} else {
-                            		  $getid =0;
-                            		}
-                            	
-                                        $ptitle ="";
-                                        $short = "";
-                                        $status ="";
-                                        $duration = "";
-                                        $d_unit = "";
-                                       $type = "";
-                                       $description = "";
-                                       $code = "";
-                                       $StartDate = "";
-                                       $EndDate = "";
-                                       $agenda = "";
-                                        $query = "SELECT * FROM `projecttb` WHERE `ID`='$getid'"; 
-                                        $result = mysqli_query($conn, $query) or die("Error : ".mysqli_error($conn));
-                                        $num = 0;
-                                        if($row = mysqli_fetch_array($result)) {	
-                                           $ptitle =$row['pTitle'];
-                                           $short = $row['Short title'];
-                                           $status = $row['Status'];
-                                           $duration = $row['Duration'];
-                                           $d_unit = $row['Duration Unit'];
-                                           $type = $row['pType'];
-                                           $description = $row['Description'];
-                                           $code = $row['Code'];
-                                           $StartDate = $row['StartDate'];
-                                           $EndDate = $row['EndDate'];
-                                           $agenda = $row['AgendaID'];
-                                        }
-                                
-                            ?>  
+                            <?php
+     include 'includes/conn.php';
+if(isset($_GET['xyz'])) {
+    $getid = $_GET['xyz'];
+} else {
+    $getid = 0;
+}
+
+$ptitle = "";
+$short = "";
+$status = "";
+$duration = "";
+$d_unit = "";
+$type = "";
+$description = "";
+$code = "";
+$StartDate = "";
+$EndDate = "";
+$agenda = "";
+$query = "SELECT * FROM `projecttb` WHERE `ID`='$getid'";
+$result = mysqli_query($conn, $query) or die("Error : " . mysqli_error($conn));
+$num = 0;
+if($row = mysqli_fetch_array($result)) {
+    $ptitle = $row['pTitle'];
+    $short = $row['Short title'];
+    $status = $row['Status'];
+    $duration = $row['Duration'];
+    $d_unit = $row['Duration Unit'];
+    $type = $row['pType'];
+    $description = $row['Description'];
+    $code = $row['Code'];
+    $StartDate = $row['StartDate'];
+    $EndDate = $row['EndDate'];
+    $agenda = $row['AgendaID'];
+}
+
+?>  
                             
                           <div class="col-md-12">
                               <div class="col-md-4">
@@ -167,28 +167,28 @@
                               <div class="col-md-8">
                                     <div class="form-group">
                                         <select class="form-control select2" name="type" id="project_type" onchange="showProjectProgram(this.value);" style="width: 100%;" required>
-                                              <?php 
-                                                  if($type =='Project'){
-                                                      
-                                                      echo '  <option value="Select">Select</option>
+                                              <?php
+                      if($type == 'Project') {
+
+                          echo '  <option value="Select">Select</option>
                                                             <option value="Project" selected>Project</option>
                                                             <option value="Program">Program</option>
                                                           
                                                       ';
-                                                  } else if($type =='Program') {
-                                                       echo '
+                      } elseif($type == 'Program') {
+                          echo '
                                                              <option value="Select">Select</option>
                                                             <option value="Project">Project</option>
                                                             <option value="Program" selected>Program</option>
                                                            
                                                        ';
-                                                  } else {
-                                                      echo '
+                      } else {
+                          echo '
                                                        <option value="Select" selected>Select</option>
                                                        <option value="Project">Project</option>
                                                             <option value="Program">Program</option>';
-                                                  }
-                                                ?>
+                      }
+?>
                                             
                                             
                                             
@@ -207,17 +207,17 @@
                                     <div class="form-group">
                                      <select class="form-control select2" name="program_id" id="program_id" style="width: 100%;">
                                          <option value="0">Select</option>
-                                          <?php 
-                                                include 'includes/conn.php'; 
-                                                
-                                                     $query = "SELECT * FROM `projecttb` WHERE `pType`='Program'"; 
-                                                     $result = mysqli_query($conn, $query) or die("Error : ".mysqli_error($conn));
-                                                    $num = 0;
-                                                    while($row = mysqli_fetch_array($result)) {	
-                                                        echo '<option value="'.$row['ID'].'">'.$row['pTitle'].'</option>';
-                                                    }  
-                                                    
-                                            ?>  
+                                          <?php
+include 'includes/conn.php';
+
+$query = "SELECT * FROM `projecttb` WHERE `pType`='Program'";
+$result = mysqli_query($conn, $query) or die("Error : " . mysqli_error($conn));
+$num = 0;
+while($row = mysqli_fetch_array($result)) {
+    echo '<option value="' . $row['ID'] . '">' . $row['pTitle'] . '</option>';
+}
+
+?>  
                                     </select>
                                     </div>
                               </div>
@@ -252,25 +252,25 @@
                               <div class="col-md-8">
                                     <div class="form-group">
                                      <!--select class="form-control select2"  name ="agenda" style="width: 100%;" required-->
-                                        <?php 
-                                                include 'includes/conn.php'; 
-                                                     $query = "SELECT * FROM `agendatb`"; 
-                                                     $result = mysqli_query($conn, $query) or die("Error : ".mysqli_error($conn));
-                                                    $num = 0;
-                                                    while($row = mysqli_fetch_array($result)) {	
-                                                        
-                                                      if(strpos($agenda, $row['Code']) !== false) {
-                                                        echo '<label>
-                                                            <input type="checkbox" name="agenda[]" value="'.$row['Code'].'" id="chk_program" class="flat-red" checked>'.$row['Code'].'
+                                        <?php
+    include 'includes/conn.php';
+$query = "SELECT * FROM `agendatb`";
+$result = mysqli_query($conn, $query) or die("Error : " . mysqli_error($conn));
+$num = 0;
+while($row = mysqli_fetch_array($result)) {
+
+    if(strpos($agenda, $row['Code']) !== false) {
+        echo '<label>
+                                                            <input type="checkbox" name="agenda[]" value="' . $row['Code'] . '" id="chk_program" class="flat-red" checked>' . $row['Code'] . '
                                                         </label>&nbsp;	&nbsp;';
-                                                      }  else {
-                                                          echo '<label>
-                                                              <input type="checkbox" name="agenda[]" value="'.$row['Code'].'" id="chk_program" class="flat-red">'.$row['Code'].'
+    } else {
+        echo '<label>
+                                                              <input type="checkbox" name="agenda[]" value="' . $row['Code'] . '" id="chk_program" class="flat-red">' . $row['Code'] . '
                                                            </label>&nbsp;	&nbsp;';
-                                                      }
-                                                        //echo '<option value="'.$row['ID'].'">'.$row['Code'].'</option>';
-                                                     }         
-                                            ?>  
+    }
+    //echo '<option value="'.$row['ID'].'">'.$row['Code'].'</option>';
+}
+?>  
                                         <!--/select-->
                                     </div>
                               </div>
@@ -323,17 +323,17 @@
                                       <i class="fa fa-building"></i>
                                       </div>
                                       <select class="form-control select2" name="sector" onchange="ShowInternalCode(this.value)">
-                                                  <?php 
-                                                include 'includes/conn.php'; 
-                                                    $query = "SELECT * FROM `sector`"; 
-                                                    $result = mysqli_query($conn, $query) or die("Error : ".mysqli_error($conn));
-                                                    $num = 0;
-                                                    echo '<option value="0">Select...</option>';
-                                                    while($row = mysqli_fetch_array($result)) {	
-                                                        echo '<option value="'.$row['SectorID'].'">'.$row['SectorName'].'</option>';
-                                                    }  
-                                                    
-                                            ?>  
+                                                  <?php
+    include 'includes/conn.php';
+$query = "SELECT * FROM `sector`";
+$result = mysqli_query($conn, $query) or die("Error : " . mysqli_error($conn));
+$num = 0;
+echo '<option value="0">Select...</option>';
+while($row = mysqli_fetch_array($result)) {
+    echo '<option value="' . $row['SectorID'] . '">' . $row['SectorName'] . '</option>';
+}
+
+?>  
                                         </select>
                                     </div>
                                   </div>
@@ -505,14 +505,14 @@
                       <div class="col-md-12">
                               <form action="includes/controller.php" method="post">
                               <div class="col-md-4">
-                                      <?php 
-                                        if(isset($_GET['xyz'])){
+                                      <?php
+                                        if(isset($_GET['xyz'])) {
                                             $get_xyz = $_GET['xyz'];
                                         } else {
-                                          $get_xyz = 0;
+                                            $get_xyz = 0;
                                         }
-                                      
-                                      ?>
+
+?>
                                   <input name="pid" value="<?php  echo $get_xyz; ?>" type="hidden" />
                                   
                                   <div class="form-group">
@@ -533,17 +533,17 @@
                                           <i class="fa fa-building"></i>
                                           </div>
                                           <select class="form-control select2" name="institution"  onchange="showFP(this.value)" style="width: 100%;" required>
-                                            <?php 
-                                                  include 'includes/conn.php'; 
-                                                      $query = "SELECT * FROM `organizationtb`"; 
-                                                      $result = mysqli_query($conn, $query) or die("Error : ".mysqli_error($conn));
-                                                      $num = 0;
-                                                      echo '<option value="0">Select...</option>';
-                                                      while($row = mysqli_fetch_array($result)) {	
-                                                          echo '<option value="'.$row['ID'].'">'.$row['Name'].'</option>';
-                                                      }  
-                                                      
-                                              ?>  
+                                            <?php
+            include 'includes/conn.php';
+$query = "SELECT * FROM `organizationtb`";
+$result = mysqli_query($conn, $query) or die("Error : " . mysqli_error($conn));
+$num = 0;
+echo '<option value="0">Select...</option>';
+while($row = mysqli_fetch_array($result)) {
+    echo '<option value="' . $row['ID'] . '">' . $row['Name'] . '</option>';
+}
+
+?>  
                                           </select>
                                         </div>
                                     </div>
@@ -608,65 +608,65 @@
                                         <th>Action</th>
                                     </thead>
                                     <tbody>
-                                    <?php 
+                                    <?php
                                         include 'includes/conn.php';
-                                         if(isset($_GET['xyz'])){
-        		                	           $getid =$_GET['xyz'];
-        		                	       } else {
-        		                	            $getid =0;
-        		                	       }
-        		                	       
-        		                	       $query = "SELECT *
+if(isset($_GET['xyz'])) {
+    $getid = $_GET['xyz'];
+} else {
+    $getid = 0;
+}
+
+$query = "SELECT *
                                             FROM project_targetgroup
                                             INNER JOIN projecttb ON project_targetgroup.Project=projecttb.ID 
                                             INNER JOIN organizationtb ON project_targetgroup.Institution = organizationtb.ID
                                             WHERE project_targetgroup.Project ='$getid'";
-                                                                                    
-                                                                                 
-                                                                                    
-                                        //$query = "SELECT * FROM `project_targetgroup` WHERE `Project`='$getid'"; 
-                                        $result = mysqli_query($conn, $query) or die("Error : ".mysqli_error($conn));
-                                        $num = 0;
-                                          while($row = mysqli_fetch_array($result)) {	
-                                              $num +=1;
-                                              $id_get = $row['targetID'];
-                                              $Institution = $row['Name'];
-                                              $fp_name ="";
-                                              //get implementors
-                                              //if(strpos($user_role['Permission'], 'da_det') !== false){}
-                                              $FocalPerson = $row['FocalPerson'];
-                                              $my_fp_arr = preg_split ("/,/", $FocalPerson);
-                                              $num =0;
-                                              foreach ($my_fp_arr as $key => $value) {
-                                                    $queryu = "SELECT * FROM `userinfo` WHERE `id`='$value'"; 
-                                                    $resultu = mysqli_query($conn, $queryu) or die("Error : ".mysqli_error($conn));
-                                                    $count = mysqli_num_rows($resultu);
-                                                
-                                                        if($rowu = mysqli_fetch_array($resultu)) {
-                                                            if($num == 0) {
-                                                                $fp_name = $rowu['Fullname'];
-                                                            } else {
-                                                                $fp_name = $fp_name.', '.$rowu['Fullname'];
-                                                            }
-                                                            
-                                                        }
-                                                   
-                                                    $num +=1;
-                                              }
-                                              
-                                                echo "<tr>
-                                                <td>".$num."</td>
-                                                <td>".$Institution."</td>
-                                                 <td>".$fp_name."</td>
+
+
+
+//$query = "SELECT * FROM `project_targetgroup` WHERE `Project`='$getid'";
+$result = mysqli_query($conn, $query) or die("Error : " . mysqli_error($conn));
+$num = 0;
+while($row = mysqli_fetch_array($result)) {
+    $num += 1;
+    $id_get = $row['targetID'];
+    $Institution = $row['Name'];
+    $fp_name = "";
+    //get implementors
+    //if(strpos($user_role['Permission'], 'da_det') !== false){}
+    $FocalPerson = $row['FocalPerson'];
+    $my_fp_arr = preg_split("/,/", $FocalPerson);
+    $num = 0;
+    foreach ($my_fp_arr as $key => $value) {
+        $queryu = "SELECT * FROM `userinfo` WHERE `id`='$value'";
+        $resultu = mysqli_query($conn, $queryu) or die("Error : " . mysqli_error($conn));
+        $count = mysqli_num_rows($resultu);
+
+        if($rowu = mysqli_fetch_array($resultu)) {
+            if($num == 0) {
+                $fp_name = $rowu['Fullname'];
+            } else {
+                $fp_name = $fp_name . ', ' . $rowu['Fullname'];
+            }
+
+        }
+
+        $num += 1;
+    }
+
+    echo "<tr>
+                                                <td>" . $num . "</td>
+                                                <td>" . $Institution . "</td>
+                                                 <td>" . $fp_name . "</td>
                                                 <td>
-                                                    <button class='btn btn-danger btn-sm deletetarget btn-flat' data-id=".$id_get."><i class='fa fa-trash'></i> Delete</button>
-                                                    <button class='btn btn-warning btn-sm edittarget btn-flat' data-id=".$id_get."><i class='fa fa-edit'></i> Submission</button>
-                                                    <button class='btn btn-info btn-sm targetactivity btn-flat' data-id=".$id_get."><i class='fa fa-edit'></i> Activity</button>
+                                                    <button class='btn btn-danger btn-sm deletetarget btn-flat' data-id=" . $id_get . "><i class='fa fa-trash'></i> Delete</button>
+                                                    <button class='btn btn-warning btn-sm edittarget btn-flat' data-id=" . $id_get . "><i class='fa fa-edit'></i> Submission</button>
+                                                    <button class='btn btn-info btn-sm targetactivity btn-flat' data-id=" . $id_get . "><i class='fa fa-edit'></i> Activity</button>
                                                 </td>
                                             </tr>";
-                                        }
-                                      
-                                    ?>
+}
+
+?>
                                                                 
                                     
                                     </tbody>
@@ -691,14 +691,14 @@
                           }
                       </script>
                       <form action="includes/controller.php" method="post" id="addproject_financial">
-                          <?php 
-                            if(isset($_GET['xyz'])){
+                          <?php
+                            if(isset($_GET['xyz'])) {
                                 $get_xyz = $_GET['xyz'];
                             } else {
-                              $get_xyz = 0;
+                                $get_xyz = 0;
                             }
-                          
-                          ?>
+
+?>
                           <input name="pid" value="<?php  echo $get_xyz; ?>" type="hidden" />
                             <div class="col-md-12">
                                 <div class="col-md-3">
@@ -726,17 +726,17 @@
                                         <i class="fa fa-building"></i>
                                         </div>
                                           <select class="form-control select2" name="donor" style="width:100%;" required>
-                                                  <?php 
-                                                include 'includes/conn.php'; 
-                                                    $query = "SELECT * FROM `organizationtb` WHERE `Type` ='Donor'"; 
-                                                    $result = mysqli_query($conn, $query) or die("Error : ".mysqli_error($conn));
-                                                    $num = 0;
-                                                    echo '<option value="SMZ">Government (SMZ)</option>';
-                                                    while($row = mysqli_fetch_array($result)) {	
-                                                        echo '<option value="'.$row['ID'].'">'.$row['Name'].'</option>';
-                                                    }  
-                                                    
-                                            ?>  
+                                                  <?php
+                      include 'includes/conn.php';
+$query = "SELECT * FROM `organizationtb` WHERE `Type` ='Donor'";
+$result = mysqli_query($conn, $query) or die("Error : " . mysqli_error($conn));
+$num = 0;
+echo '<option value="SMZ">Government (SMZ)</option>';
+while($row = mysqli_fetch_array($result)) {
+    echo '<option value="' . $row['ID'] . '">' . $row['Name'] . '</option>';
+}
+
+?>  
                                         </select>
                                       </div>
                                   </div>
@@ -775,15 +775,15 @@
                                                 </div>
                                                 <select class="form-control select2" style="width:100%;" name="currency" onchange="ShowUnit(this.value)" required>
                                                                     <?php
-                                                                       include 'currency.php';
-                                                                       foreach ($currency_symbols as $key => $value) {
-                                                                           if($key =='TZS'){
-                                                                                echo '<option selected="selected" value="'.$value.'('.$key.')'.'">'.$value.'('.$key.')'.'</option>';
-                                                                           } else {
-                                                                                echo '<option value="'.$value.'('.$key.')'.'">'.$value.'('.$key.')'.'</option>';
-                                                                           }
-                                                                        }
-                                                                    ?>
+                           include 'currency.php';
+foreach ($currency_symbols as $key => $value) {
+    if($key == 'TZS') {
+        echo '<option selected="selected" value="' . $value . '(' . $key . ')' . '">' . $value . '(' . $key . ')' . '</option>';
+    } else {
+        echo '<option value="' . $value . '(' . $key . ')' . '">' . $value . '(' . $key . ')' . '</option>';
+    }
+}
+?>
                                                                    
                                                                    
                                                                 </select>
@@ -808,7 +808,7 @@
                                         <div class="input-group-addon">
                                         <i class="fa fa-building"></i>
                                         </div>
-                                        <input type="text" name="disbursed" id="proj_disbursed" onkeyup="proj_disbursedfnct(this.value)" class="form-control pull-right" placeholder="Enter total Compensation cost...">
+                                        <input type="text" name="disbursed" id="proj_disbursed" class="form-control pull-right" placeholder="Enter total Compensation cost...">
                                       </div>
                                   </div>
                                 </div>
@@ -837,65 +837,65 @@
                                         <th>Action</th>
                                     </thead>
                                     <tbody>
-                                    <?php 
+                                    <?php
                                         include 'includes/conn.php';
-                                         if(isset($_GET['xyz'])){
-        		                	           $getid =$_GET['xyz'];
-        		                	       } else {
-        		                	            $getid =0;
-        		                	       }
-        		                	  
-                                        $query = "SELECT * FROM `project_financing` WHERE `Project`='$getid'"; 
-                                        $result = mysqli_query($conn, $query) or die("Error : ".mysqli_error($conn));
-                                        $num = 0;
-                                        $_SESSION['total_tshs'] = 0;
-                                        $_SESSION['total_f'] = 0;
-                                        $_SESSION['disbursed_tshs'] = 0;
-                                        $_SESSION['disbursed_f'] = 0;
-                                        
-                                          while($row = mysqli_fetch_array($result)) {	
-                                              $num +=1;
-                                              $id_get = $row['financing_ID'];
-                                              $Financing = $row['Financing'];
-                                              $donor = $row['SponsorID'];
-                                              $unit = $row['Currency'].' '.$row['Unittype'];
-                                              
-                                              if($row['Currency'] =='Tshs'){
-                                                  $_SESSION['total_tshs'] += $row['TotalAmount'];
-                                                  $_SESSION['disbursed_tshs'] += $row['Disbursed'];
-                                              } else {
-                                                  $_SESSION['total_f'] += $row['TotalAmount'];
-                                                  $_SESSION['disbursed_f'] += $row['Disbursed'];
-                                              }
-                                              
-                                              $TotalAmount = number_format($row['TotalAmount'],2, '.', ',').'/'.$unit;
-                                              $disbursed = number_format($row['Disbursed'],2, '.', ',').'/'.$unit;
-                                                
-                                                $donor_name="";
-                                                if($donor ==0){
-                                                    $donor_name ='Government SMZ';
-                                                } else {
-                                                     $queryd = "SELECT * FROM `organizationtb` WHERE `ID`='$donor'"; 
-                                                     $resultd = mysqli_query($conn, $queryd) or die("Error : ".mysqli_error($conn));
-                                                     if($rowd = mysqli_fetch_array($resultd)) {	
-                                                         $donor_name = $rowd['Name'];
-                                                     }
-                                                }
-                                             
-                                                echo "<tr>
-                                                <td>".$num."</td>
-                                                <td>".$Financing."</td>
-                                                <td>".$donor_name."</td>
-                                                <td>".$TotalAmount."</td>
-                                                 <td>".$disbursed."</td>
+if(isset($_GET['xyz'])) {
+    $getid = $_GET['xyz'];
+} else {
+    $getid = 0;
+}
+
+$query = "SELECT * FROM `project_financing` WHERE `Project`='$getid'";
+$result = mysqli_query($conn, $query) or die("Error : " . mysqli_error($conn));
+$num = 0;
+$_SESSION['total_tshs'] = 0;
+$_SESSION['total_f'] = 0;
+$_SESSION['disbursed_tshs'] = 0;
+$_SESSION['disbursed_f'] = 0;
+
+while($row = mysqli_fetch_array($result)) {
+    $num += 1;
+    $id_get = $row['financing_ID'];
+    $Financing = $row['Financing'];
+    $donor = $row['SponsorID'];
+    $unit = $row['Currency'] . ' ' . $row['Unittype'];
+
+    if($row['Currency'] == 'Tshs') {
+        $_SESSION['total_tshs'] += $row['TotalAmount'];
+        $_SESSION['disbursed_tshs'] += $row['Disbursed'];
+    } else {
+        $_SESSION['total_f'] += $row['TotalAmount'];
+        $_SESSION['disbursed_f'] += $row['Disbursed'];
+    }
+
+    $TotalAmount = number_format($row['TotalAmount'], 2, '.', ',') . '/' . $unit;
+    $disbursed = number_format($row['Disbursed'], 2, '.', ',') . '/' . $unit;
+
+    $donor_name = "";
+    if($donor == 0) {
+        $donor_name = 'Government SMZ';
+    } else {
+        $queryd = "SELECT * FROM `organizationtb` WHERE `ID`='$donor'";
+        $resultd = mysqli_query($conn, $queryd) or die("Error : " . mysqli_error($conn));
+        if($rowd = mysqli_fetch_array($resultd)) {
+            $donor_name = $rowd['Name'];
+        }
+    }
+
+    echo "<tr>
+                                                <td>" . $num . "</td>
+                                                <td>" . $Financing . "</td>
+                                                <td>" . $donor_name . "</td>
+                                                <td>" . $TotalAmount . "</td>
+                                                 <td>" . $disbursed . "</td>
                                                 <td>
                                                    
-                                                    <button class='btn btn-danger btn-sm deletefinance btn-flat' data-id=".$id_get."><i class='fa fa-trash'></i> Delete</button>
+                                                    <button class='btn btn-danger btn-sm deletefinance btn-flat' data-id=" . $id_get . "><i class='fa fa-trash'></i> Delete</button>
                                                 </td>
                                             </tr>";
-                                        }
-                                      
-                                    ?>
+}
+
+?>
                                                                 
                                     
                                     </tbody>
@@ -912,14 +912,14 @@
                             <div class="col-md-12">
                                  <div class="col-md-4">
                                      <form action="includes/controller.php" method="post" enctype="multipart/form-data">
-                                     <?php 
-                                      if(isset($_GET['xyz'])){
-                                          $get_xyz = $_GET['xyz'];
-                                      } else {
-                                        $get_xyz = 0;
-                                      }
-                                    
-                                    ?>
+                                     <?php
+  if(isset($_GET['xyz'])) {
+      $get_xyz = $_GET['xyz'];
+  } else {
+      $get_xyz = 0;
+  }
+
+?>
                                       <input name="pid" value="<?php  echo $get_xyz; ?>" type="hidden" />
                                       <div class="form-group">
                                         <label>Project </label>
@@ -941,7 +941,7 @@
                                     </div>
                                     <div class="form-group">
                                             <label>File|Document <span style="color:red;">*</span> </label>
-                                             <input type="file" name="file_rep" class="form-control pull-right" placeholder="Enter report name..."  required/>
+                                             <input type="file" name="file_rep" class="form-control pull-right" placeholder="Enter report name..." accept=".jpg, .jpeg, .png, .pdf" required/>
                                     </div><br />
                                     <div class="form-group">
                                           <div class="modal-footer">
@@ -959,29 +959,29 @@
                                             <th>Action</th>
                                         </thead>
                                         <tbody>
-                                        <?php 
-                                            include 'includes/conn.php';
-                                            $kra_details =" ";
-                                            $query = "SELECT * FROM `project_file` WHERE `Project`='$getid'"; 
-                                            $result = mysqli_query($conn, $query) or die("Error : ".mysqli_error($conn));
-                                            $num = 0;
-                                              while($row = mysqli_fetch_array($result)) {	
-                                                  $num +=1;
-                                                  $id_get = $row['fileID'];
-                                                  $Name = $row['Filename'];
-                                                
-                                                    echo "<tr>
-                                                    <td>".$num."</td>
-                                                    <td>".$Name."</td>
+                                        <?php
+        include 'includes/conn.php';
+$kra_details = " ";
+$query = "SELECT * FROM `project_file` WHERE `Project`='$getid'";
+$result = mysqli_query($conn, $query) or die("Error : " . mysqli_error($conn));
+$num = 0;
+while($row = mysqli_fetch_array($result)) {
+    $num += 1;
+    $id_get = $row['fileID'];
+    $Name = $row['Filename'];
+
+    echo "<tr>
+                                                    <td>" . $num . "</td>
+                                                    <td>" . $Name . "</td>
                                                     
                                                     <td>
-                                                        <a href='includes/Documents/".$row['Filelocation']."' class='btn btn-info btn-sm btn-flat download><i class='fa fa-download'></i>Download</a>
-                                                        <button class='btn btn-danger btn-sm deleteattachment btn-flat' data-id=".$id_get."><i class='fa fa-trash'></i> Delete</button>
+                                                        <a href='includes/Documents/" . $row['Filelocation'] . "' class='btn btn-info btn-sm btn-flat download><i class='fa fa-download'></i>Download</a>
+                                                        <button class='btn btn-danger btn-sm deleteattachment btn-flat' data-id=" . $id_get . "><i class='fa fa-trash'></i> Delete</button>
                                                     </td>
                                                 </tr>";
-                                            }
-                                           
-                                        ?>
+}
+
+?>
                                                                     
                                         
                                         </tbody>
@@ -1018,14 +1018,14 @@
                             <div class="col-md-12">
                                  <div class="col-md-4">
                                       <form action="includes/controller.php" method="post" id="addproject_activity">
-                                      <?php 
-                                        if(isset($_GET['xyz'])){
-                                            $get_xyz = $_GET['xyz'];
-                                        } else {
-                                          $get_xyz = 0;
-                                        }
-                                      
-                                      ?>
+                                      <?php
+if(isset($_GET['xyz'])) {
+    $get_xyz = $_GET['xyz'];
+} else {
+    $get_xyz = 0;
+}
+
+?>
                                       <input name="pid" value="<?php  echo $get_xyz; ?>" type="hidden" />
                                        <div class="form-group">
                                           <label>Program|Project Title </label>
@@ -1082,15 +1082,15 @@
                                                 </div>
                                                 <select class="form-control select2" style="width:100%;" name="currency" onchange="ShowUnit(this.value)" required>
                                                                     <?php
-                                                                       include 'currency.php';
-                                                                       foreach ($currency_symbols as $key => $value) {
-                                                                           if($key =='TZS'){
-                                                                                echo '<option selected="selected" value="'.$value.'('.$key.')'.'">'.$value.'('.$key.')'.'</option>';
-                                                                           } else {
-                                                                                echo '<option value="'.$value.'('.$key.')'.'">'.$value.'('.$key.')'.'</option>';
-                                                                           }
-                                                                        }
-                                                                    ?>
+                                 include 'currency.php';
+foreach ($currency_symbols as $key => $value) {
+    if($key == 'TZS') {
+        echo '<option selected="selected" value="' . $value . '(' . $key . ')' . '">' . $value . '(' . $key . ')' . '</option>';
+    } else {
+        echo '<option value="' . $value . '(' . $key . ')' . '">' . $value . '(' . $key . ')' . '</option>';
+    }
+}
+?>
                                                                    
                                                                    
                                                                 </select>
@@ -1103,26 +1103,26 @@
                                                 <div class="input-group-addon">
                                                 <i class="fa fa-building"></i>
                                                 </div>
-                                                 <?php 
-                                                    if(isset($_GET['xyz'])){
-                                                          $getid = $_GET['xyz'];
-                                                          $queryy ="SELECT * FROM project_financing WHERE Project='$getid'";
-                                                          $resulty = mysqli_query($conn, $queryy) or die("Error : ".mysqli_error($conn));
-                                                          $num_pesa = 0;
-                                                          while($rowy = mysqli_fetch_array($resulty)) {	
-                                                               $num_pesa = $num_pesa + $rowy['TotalAmount'] + $rowy['Compensation'];
-                                                          }   
-                                                          
-                                                          $queryys ="SELECT * FROM project_activity WHERE Project='$getid'";
-                                                          $resultys = mysqli_query($conn, $queryys) or die("Error : ".mysqli_error($conn));
-                                                          while($rowys = mysqli_fetch_array($resultys)) {	
-                                                               $num_pesa = $num_pesa - $rowys['Amount'];
-                                                               $num_pesa = $num_pesa - $rowys['amountWM'];
-                                                          }   
-                                                          
-                                                          
+                                                 <?php
+                                                    if(isset($_GET['xyz'])) {
+                                                        $getid = $_GET['xyz'];
+                                                        $queryy = "SELECT * FROM project_financing WHERE Project='$getid'";
+                                                        $resulty = mysqli_query($conn, $queryy) or die("Error : " . mysqli_error($conn));
+                                                        $num_pesa = 0;
+                                                        while($rowy = mysqli_fetch_array($resulty)) {
+                                                            $num_pesa = $num_pesa + $rowy['TotalAmount'] + $rowy['Compensation'];
+                                                        }
+
+                                                        $queryys = "SELECT * FROM project_activity WHERE Project='$getid'";
+                                                        $resultys = mysqli_query($conn, $queryys) or die("Error : " . mysqli_error($conn));
+                                                        while($rowys = mysqli_fetch_array($resultys)) {
+                                                            $num_pesa = $num_pesa - $rowys['Amount'];
+                                                            $num_pesa = $num_pesa - $rowys['amountWM'];
+                                                        }
+
+
                                                     }
-                                                 ?>
+?>
                                                 <input type="text" name="totalamount" id="proj_gttotalamount" class="form-control pull-right" value="<?php echo $num_pesa; ?>" readonly/>
                                                </div>
                                      </div>
@@ -1177,38 +1177,38 @@
                                             <th>Action</th>
                                         </thead>
                                         <tbody>
-                                        <?php 
+                                        <?php
                                             include 'includes/conn.php';
-                                            $kra_details =" ";
-                                            $query = "SELECT * FROM `project_activity` WHERE `Project`='$getid'"; 
-                                            $result = mysqli_query($conn, $query) or die("Error : ".mysqli_error($conn));
-                                            $num = 0;
-                                              while($row = mysqli_fetch_array($result)) {	
-                                                  $num +=1;
-                                                  $id_get = $row['activityID'];
-                                                  $Name = $row['Activity'];
-                                                  $Resource = $row['Resource'];
-                                                  $StartDate = $row['StartDate'];
-                                                  $EndDate = $row['EndDate'];
-                                                  
-                                                  $Amount = $row['Amount'];
-                                                  $amount_wm = $row['amountWM'];
-                                                  $totalamount = $Amount + $amount_wm;
-                                                  
-                                                    echo "<tr>
-                                                            <td>".$num."</td>
-                                                            <td>".$Name."</td>
-                                                            <td>".$Resource."</td>
-                                                            <td>".$StartDate."</td>
-                                                            <td>".$EndDate."</td>
-                                                            <td>".number_format($totalamount, 2)."</td>
+$kra_details = " ";
+$query = "SELECT * FROM `project_activity` WHERE `Project`='$getid'";
+$result = mysqli_query($conn, $query) or die("Error : " . mysqli_error($conn));
+$num = 0;
+while($row = mysqli_fetch_array($result)) {
+    $num += 1;
+    $id_get = $row['activityID'];
+    $Name = $row['Activity'];
+    $Resource = $row['Resource'];
+    $StartDate = $row['StartDate'];
+    $EndDate = $row['EndDate'];
+
+    $Amount = $row['Amount'];
+    $amount_wm = $row['amountWM'];
+    $totalamount = $Amount + $amount_wm;
+
+    echo "<tr>
+                                                            <td>" . $num . "</td>
+                                                            <td>" . $Name . "</td>
+                                                            <td>" . $Resource . "</td>
+                                                            <td>" . $StartDate . "</td>
+                                                            <td>" . $EndDate . "</td>
+                                                            <td>" . number_format($totalamount, 2) . "</td>
                                                             <td>
-                                                                <button class='btn btn-danger btn-sm deleteactivity btn-flat' data-id=".$id_get."><i class='fa fa-trash'></i> Delete</button>
+                                                                <button class='btn btn-danger btn-sm deleteactivity btn-flat' data-id=" . $id_get . "><i class='fa fa-trash'></i> Delete</button>
                                                             </td>
                                                         </tr>";
-                                            }
-                                           
-                                        ?>
+}
+
+?>
                                                                     
                                         
                                         </tbody>
@@ -1234,17 +1234,17 @@
                                         <i class="fa fa-building"></i>
                                         </div>
                                          <select class="form-control select2" name="region" style="width: 100%;" onchange="showLGAsRegion(this.value)" required>
-                                           <?php 
-                                                include 'includes/conn.php'; 
-                                                    $query = "SELECT * FROM `regiontb`"; 
-                                                    $result = mysqli_query($conn, $query) or die("Error : ".mysqli_error($conn));
-                                                    $num = 0;
-                                                    echo '<option value="0">Select...</option>';
-                                                    while($row = mysqli_fetch_array($result)) {	
-                                                        echo '<option value="'.$row['ID'].'">'.$row['Name'].'</option>';
-                                                    }  
-                                                    
-                                            ?>  
+                                           <?php
+        include 'includes/conn.php';
+$query = "SELECT * FROM `regiontb`";
+$result = mysqli_query($conn, $query) or die("Error : " . mysqli_error($conn));
+$num = 0;
+echo '<option value="0">Select...</option>';
+while($row = mysqli_fetch_array($result)) {
+    echo '<option value="' . $row['ID'] . '">' . $row['Name'] . '</option>';
+}
+
+?>  
                                         </select>
                                       </div>
                                   </div>
@@ -1283,31 +1283,31 @@
                                         <th>Action</th>
                                     </thead>
                                     <tbody>
-                                    <?php 
+                                    <?php
                                         include 'includes/conn.php';
-                                         if(isset($_GET['xyz'])){
-        		                	           $getid =$_GET['xyz'];
-        		                	       } else {
-        		                	            $getid =0;
-        		                	       }
-        		                	       
-                                        $query = "SELECT * FROM project_location, wilayatb, regiontb WHERE project_location.Project='$getid' AND project_location.Wilaya = wilayatb.WilayaID AND wilayatb.MkoaID = regiontb.ID"; 
-                                        $result = mysqli_query($conn, $query) or die("Error : ".mysqli_error($conn));
-                                        $num = 1;
-                                          while($row = mysqli_fetch_array($result)) {	
-                                                echo "<tr>
-                                                <td>".$num."</td>
-                                                <td>".$row['Name']."</td>
-                                                 <td>".$row['JinaLaWilaya']."</td>
+if(isset($_GET['xyz'])) {
+    $getid = $_GET['xyz'];
+} else {
+    $getid = 0;
+}
+
+$query = "SELECT * FROM project_location, wilayatb, regiontb WHERE project_location.Project='$getid' AND project_location.Wilaya = wilayatb.WilayaID AND wilayatb.MkoaID = regiontb.ID";
+$result = mysqli_query($conn, $query) or die("Error : " . mysqli_error($conn));
+$num = 1;
+while($row = mysqli_fetch_array($result)) {
+    echo "<tr>
+                                                <td>" . $num . "</td>
+                                                <td>" . $row['Name'] . "</td>
+                                                 <td>" . $row['JinaLaWilaya'] . "</td>
                                                 <td>
-                                                    <button class='btn btn-danger btn-sm deletetarget btn-flat' data-id=".$row['LocationID']."><i class='fa fa-trash'></i> Delete</button>
+                                                    <button class='btn btn-danger btn-sm deletetarget btn-flat' data-id=" . $row['LocationID'] . "><i class='fa fa-trash'></i> Delete</button>
                                                 </td>
                                             </tr>";
-                                            
-                                            $num +=1;
-                                        }
-                                      
-                                    ?>
+
+    $num += 1;
+}
+
+?>
                                                                 
                                     
                                     </tbody>

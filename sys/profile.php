@@ -59,18 +59,18 @@
               <strong><i class="fa fa-map-marker margin-r-5"></i> Organization</strong>
 
               <p class="text-muted" style="padding-left:4%;">
-                <?php 
+                <?php
                   include 'includes/conn.php';
-                  $getid=$user['Organization'];
-                  $query = "SELECT * FROM `organizationtb` WHERE `ID`='$getid'"; 
-                  $result = mysqli_query($conn, $query) or die("Error : ".mysqli_error($conn));
-                  $num = 0;
-                    if($row = mysqli_fetch_array($result)) {	
-                      echo $row['Name']; 
-                    } else {
-                      echo '';
-                    }
-                ?>
+$getid = $user['Organization'];
+$query = "SELECT * FROM `organizationtb` WHERE `ID`='$getid'";
+$result = mysqli_query($conn, $query) or die("Error : " . mysqli_error($conn));
+$num = 0;
+if($row = mysqli_fetch_array($result)) {
+    echo $row['Name'];
+} else {
+    echo '';
+}
+?>
               </p>
 
               <hr>
@@ -78,19 +78,19 @@
               <strong><i class="fa fa-pencil margin-r-5"></i> Position</strong>
 
               <p style="padding-left:10%;">
-                <?php 
-                  include 'includes/conn.php';
-                  $getid=$user['Role'];
-                  $query = "SELECT * FROM `roletb` WHERE `role_ID`='$getid'"; 
-                  $result = mysqli_query($conn, $query) or die("Error : ".mysqli_error($conn));
-                  $num = 0;
-                    if($row = mysqli_fetch_array($result)) {	
-                      echo $row['Name']; 
-                    } else {
-                      echo '';
-                    }
-                  
-                ?>
+                <?php
+  include 'includes/conn.php';
+$getid = $user['Role'];
+$query = "SELECT * FROM `roletb` WHERE `role_ID`='$getid'";
+$result = mysqli_query($conn, $query) or die("Error : " . mysqli_error($conn));
+$num = 0;
+if($row = mysqli_fetch_array($result)) {
+    echo $row['Name'];
+} else {
+    echo '';
+}
+
+?>
               </p>
 
               <hr>
@@ -140,14 +140,14 @@
 				   <h3> SETTING </h3>
 				    <input type="hidden" id="userid" name="userid" value="<?php echo $user['id']; ?>" >
                   <div class="form-group">
-                    <label for="inputEmail" class="col-sm-2 control-label">Email</label>
+                    <label for="inputEmail" class="col-sm-2 control-label">Email<span style="color:red;"> *</span></label>
 
                     <div class="col-sm-10">
-                      <input type="email" class="form-control" id="inputEmail" placeholder="Email" name="email" >
+                      <input type="email" class="form-control" id="inputEmail" placeholder="Email" name="email" required>
                     </div>
                   </div>
                   <div class="form-group">
-                    <label for="inputName" class="col-sm-2 control-label">Old Password</label>
+                    <label for="inputName" class="col-sm-2 control-label">Old Password<span style="color:red;"> *</span></label>
 
                     <div class="col-sm-10">
                       <input type="password" class="form-control" name ="password" id="password" placeholder="password" required>

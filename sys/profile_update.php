@@ -36,6 +36,17 @@
 		$password = $_POST['password'];
 	    $userid = $_POST['userid'];
 		
+		// Generate a unique verification code (you can use a library to generate secure tokens)
+		$verificationCode = bin2hex(random_bytes(16));
+
+		// Store the verification code in your database along with user details
+		// Send a verification email to the user
+		$subject = 'Verify Your Email';
+		$message = "Click the following link to verify your email: http://zmes.planningznz.go.tz/sys/verify.php?code=$verificationCode";
+		$headers = 'From: engineerbably@gmail.com';
+		$email = $username;
+		
+		mail($email, $subject, $message, $headers);
 		//if(password_verify($password, $user['password'])){
 
             $password = md5($curr_password);

@@ -144,6 +144,7 @@
                               <input type="hidden" class="form-control" name="project" value="<?php echo $get_id; ?>" required/>
                               <input type="hidden" class="form-control" name="user" value="<?php echo $user_id; ?>" required/>
                               <input type="hidden" class="form-control" name="organization" value="<?php echo $user_org; ?>" required/>
+                              <input type="hidden" class="form-control" name="report_type" value="KPI" required/>
                               <?php 
                                     if($submit_status == 1){
                                       $date = $submit_on;

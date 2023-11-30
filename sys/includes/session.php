@@ -2,6 +2,15 @@
 if(!isset($_SESSION)) 
 { 
     session_start(); 
+    define('SESSION_TIMEOUT', 120); // 3 minute
+    $_SESSION['last_activity'] = time();
+    if (isset($_SESSION['last_activity']) && (time() - $_SESSION['last_activity'] > SESSION_TIMEOUT)) {
+        session_unset(); // Unset all session data
+        session_destroy(); // Destroy the session
+        header('Location: index.php'); // Redirect to the login page
+        exit();
+    }
+
     $protocol = ((!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] != 'off') || $_SERVER['SERVER_PORT'] == 443) ? "https://" : "http://"; 
 	$user_current_url = $protocol . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'] . $_SERVER['QUERY_STRING']; 
   	$_SESSION['page'] = $user_current_url;

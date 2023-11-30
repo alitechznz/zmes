@@ -26,6 +26,32 @@ function ShowmeIndicator(str) {
            xmlhttp.send();
        }
    }
+
+   function ShowPlanValue(str) {
+         //alert(str);
+         var proj = document.getElementById("project_idp").value;
+        // alert(proj);
+                if (str == "") {
+                    document.getElementById("planidvalue").innerHTML = "";
+                    return;
+                } else {
+                    if (window.XMLHttpRequest) {
+                        // code for IE7+, Firefox, Chrome, Opera, Safari
+                        xmlhttp = new XMLHttpRequest();
+                    } else {
+                        // code for IE6, IE5
+                        xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+                    }
+                    xmlhttp.onreadystatechange = function() {
+                        if (this.readyState == 4 && this.status == 200) {
+                            document.getElementById("planidvalue").innerHTML = this.responseText;
+                        }
+                    };
+                    xmlhttp.open("GET","getplanvalue.php?q="+str+"&p="+proj,true);
+                    xmlhttp.send();
+                }
+       
+}
 </script>
 
   <?php include 'includes/navbar.php'; ?>
@@ -167,8 +193,22 @@ function ShowmeIndicator(str) {
                               <input type="hidden" class="form-control"  value="<?php echo $get_id; ?>"  id="project_idp"/>
                               <input type="hidden" class="form-control" name="user" value="<?php echo $user_id; ?>" required/>
                               <input type="hidden" class="form-control" name="organization" value="<?php echo $user_org; ?>" required/>
+                              <input type="hidden" class="form-control" name="report_type" value="MEPlan" required/>
 
                                 <?php
+                                  if($submit_status == 1){
+                                    $date = $submit_on;
+                                  } else {
+                                    $date = date("Y-m-d h:i:s");
+                                  }
+                                 
+                                  if($submit_on==''){$submit_on = $date; }
+                                  if($approve_on==''){$approve_on = $date; }
+                                  if($confirm_on==''){$confirm_on = $date; }
+                                  if($accept_on==''){$accept_on = $date; }
+                                  
+
+                                 if(strpos($user_role['Permission'], 'mon_submit') !== false){
                                   if(isset($_GET['plan'])) {
                                       $idp = $_GET['plan'];
                                       $query = "SELECT * FROM project_plan WHERE IDp='$idp'";
@@ -195,7 +235,7 @@ function ShowmeIndicator(str) {
                                           $descript_value = $row['Value'];
                                       }
                                   ?>
-                                   <input type="hidden" value="<?php echo $_GET['plan']; ?>" name="id">
+                                  <input type="hidden" value="<?php echo $_GET['plan']; ?>" name="id">
                                       <div class="col-md-12">
                                           <div class="col-md-4">
                                               <div class="form-group">
@@ -288,57 +328,212 @@ function ShowmeIndicator(str) {
                                          
                                       </div>
                                      
-                                <?php } ?>
+                                <?php }} ?>
                                 <div class="col-md-12">
-                                <?php 
-                                  if(strpos($user_role['Permission'], 'mon_submit') !== false){
-                                    if(isset($_GET['type']) OR $submit_status == 1){
-                                      // if($_GET['type'] == 'submit') {
-                                        echo '&nbsp;<a href="assign_kra?id='.$get_id.'" class="btn bg-navy btn-flat pull-left"><i class="fa fa-arrow-left"></i> Back</a>';
-                                         if($submit_status == 2 || $submit_status == 0){
-                                          echo '&nbsp;<button type="submit" class="btn btn-primary btn-flat pull-left" name="submitprojectkra"><i class="fa fa-save"></i> Submit</button>';
-                                         } else {
-                                          echo '&nbsp;<button type="submit" class="btn btn-primary btn-flat pull-left" name="submitprojectkra" disabled><i class="fa fa-save"></i> Submit</button>';
-                                         }
-                                      // }
-                                    } else {
-                                      echo '&nbsp;<button type="submit" class="btn btn-primary btn-flat pull-left" name="addprojectkra"><i class="fa fa-save"></i> Save</button>';
-                                    }
-                                    
-                                  }
-                                  if(strpos($user_role['Permission'], 'mon_submit') !== false){
-                                    if($submit_status == 0 || $submit_status == 2){
-                                      echo '&nbsp;<a href="assign_kra?id='.$get_id.'&type=submit" class="btn btn-success btn-flat pull-left" data-dismiss="modal"><i class="fa fa-edit"></i> Submit KPI</a>';
-                                    } else {
-                                      echo '&nbsp;<a href="assign_kra?id='.$get_id.'&type=submit" class="btn btn-success btn-flat pull-left" data-dismiss="modal" disabled><i class="fa fa-edit"></i> Submit KPI</a>';
-                                    }
-                                  }
+                                  <?php 
+                                    if(strpos($user_role['Permission'], 'mon_confirm') !== false || strpos($user_role['Permission'], 'mon_verify') !== false || strpos($user_role['Permission'], 'mon_accept') !== false) { ?>
+                                    <div class="col-md-12">
+                                      <h5>SUBMISSION SECTION</h5>
+                                      <input name="projid" value="<?php  echo $get_id; ?>" type="hidden" />
+                                      <div class="col-md-4">
+                                            <div class="form-group">
+                                              <label>Submitted By :</label>
+                                              <input type="text" class="form-control" name="date_submit" value ="<?php echo $submit_by; ?>" style="width: 100%;"  readonly/>
+                                            </div>
+                                      </div>
+                                      <div class="col-md-4">
+                                            <div class="form-group">
+                                                <label>Submission Date :</label>
+                                                <input type="text" class="form-control" name="date_submit" value ="<?php echo $date; ?>" style="width: 100%;"  readonly/>
+                                            </div>
+                                      </div>
+                                      <div class="col-md-12">
+                                            <div class="form-group">
+                                                <label>Submission Comment :</label>
+                                                <textarea class="form-control" style="width: 100%;" row="5" col="10" name="submit_reason" value="<?php echo $submit_comment; ?>"><?php echo $submit_comment; ?></textarea>
+                                            </div>
+                                      </div>
+                                    </div>
+                                    <?php }
+                                    if(strpos($user_role['Permission'], 'mon_verify') !== false || strpos($user_role['Permission'], 'mon_confirm') !== false || strpos($user_role['Permission'], 'mon_accept') !== false){ ?>
+                                                <hr />
+                                                <div class="col-md-12">
+                                          <h5>APPROVE SECTION</h5>
+                                          <!-- <input name="projid" value="<?php  echo $get_id; ?>" type="hidden" /> -->
+                                          <div class="col-md-4">
+                                            <div class="form-group">
+                                              <label>Approve By :</label>
+                                              <input type="text" class="form-control" name="approve_by" value ="<?php echo $approve_by; ?>" style="width: 100%;"  readonly/>
+                                            </div>
+                                          </div>
+                                          <div class="col-md-4">
+                                                <div class="form-group">
+                                                    <label> Date Approve:</label>
+                                                    <input type="text" class="form-control" name="date_approve" value ="<?php echo $approve_on; ?>" style="width: 100%;"  readonly/>
+                                                </div>
+                                          </div>
+                                          <div class="col-md-4">
+                                                <div class="form-group">
+                                                    <label>Action :</label>
+                                                    <select class="form-control" name="approve_action" style="width: 100%;" required>
+                                                      <option value=''>Select...</option>
+                                                      <?php
+                                                         if($approve_status == 0){
+                                                          echo "<option value='0' selected>Reject</option><option value='1'>Approve</option>";
+                                                         } elseif($approve_status == 1) {
+                                                          echo "<option value='1' selected>Approve</option> <option value='0'>Reject</option>";
+                                                         } else {
+                                                          echo "<option value='1'>Approve</option> <option value='0'>Reject</option>";
+                                                         }
+                                                      ?>
+                                                      
+                                                     
+                                                    </select>
+                                                </div>
+                                          </div>
+                                          <div class="col-md-12">
+                                                <div class="form-group">
+                                                    <label>Approve Comment :</label>
+                                                    <textarea class="form-control" style="width: 100%;" row="5" col="10" name="approve_reason" value=" $approve_comment"><?php echo  $approve_comment; ?></textarea>
+                                                </div>
+                                          </div>
+                                        </div>
 
-                                  if(strpos($user_role['Permission'], 'mon_verify') !== false){
-                                    if($approve_status == 0 || $approve_status == 2){
-                                        echo '&nbsp;<button type="submit" name="kpimonapprove" class="btn btn-success btn-flat pull-left" data-dismiss="modal"><i class="fa fa-edit"></i> Approve KPI</button>';
-                                    } else {
-                                        echo '&nbsp;<a href="assign_kra?id='.$get_id.'&type=approve" class="btn btn-success btn-flat pull-left" data-dismiss="modal" disabled><i class="fa fa-edit"></i> Approve KPI</a>';
-                                    }
-                                  }
+                                  <?php  }
+                            
+                                 if(strpos($user_role['Permission'], 'mon_confirm') !== false || strpos($user_role['Permission'], 'mon_accept') !== false){ ?>
+                                  <hr />
+                                  <div class="col-md-12">
+                                    <h5>CONFIRMATION SECTION</h5>
+                                    <!-- <input name="projid" value="<?php  echo $get_id; ?>" type="hidden" /> -->
+                                    <div class="col-md-4">
+                                      <div class="form-group">
+                                        <label>Confirmed By :</label>
+                                        <input type="text" class="form-control" name="confirm_by" value ="<?php echo $confirm_by; ?>" style="width: 100%;"  readonly/>
+                                      </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                          <div class="form-group">
+                                              <label> Confirmation Date:</label>
+                                              <input type="text" class="form-control" name="date_confirm" value ="<?php echo $confirm_on; ?>" style="width: 100%;"  readonly/>
+                                          </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                          <div class="form-group">
+                                              <label>Action :</label>
+                                              <select class="form-control" name="confirm_action" style="width: 100%;" required>
+                                                <option value=''>Select...</option>
+                                                <?php
+                                                  if($confirm_status == 0){
+                                                    echo "<option value='0' selected>Reject</option><option value='1'>Approve</option>";
+                                                  } elseif($confirm_status == 1) {
+                                                    echo "<option value='1' selected>Approve</option> <option value='0'>Reject</option>";
+                                                  } else{
+                                                    echo "<option value='1'>Approve</option> <option value='0'>Reject</option>";
+                                                  }
+                                                ?>
+                                              </select>
+                                          </div>
+                                    </div>
+                                    <div class="col-md-12">
+                                          <div class="form-group">
+                                              <label>Confirmation Comment :</label>
+                                              <textarea class="form-control" style="width: 100%;" row="5" col="10" name="confirm_comment" value="<?php echo $confirm_comment; ?>"><?php echo $confirm_comment; ?></textarea>
+                                          </div>
+                                    </div>
+                                  </div>
 
-                                  if(strpos($user_role['Permission'], 'mon_confirm') !== false){
-                                    if($confirm_status == 0 || $confirm_status == 2){
-                                      echo '&nbsp;<button type="submit" name="kpimonconfirm" class="btn btn-success btn-flat pull-left" data-dismiss="modal"><i class="fa fa-edit"></i>Confirm KPI</button>';
-                                    } else {
-                                      echo '&nbsp;<button type="submit" name="kpimonconfirm" class="btn btn-success btn-flat pull-left" data-dismiss="modal" disabled><i class="fa fa-edit"></i>Confirm KPI</button>';
-                                    }
-                                  }
+                                <?php }
 
-                                  if(strpos($user_role['Permission'], 'mon_accept') !== false){
-                                    if($accept_status == 0 || $accept_status == 2){
-                                          echo '&nbsp;<button type="submit" name="kpimonaccept" class="btn btn-success btn-flat pull-left" data-dismiss="modal"><i class="fa fa-edit"></i>ZPC Accept KPI</button>';
-                                    } else {
-                                      echo '&nbsp;<a href="assign_kra?id='.$get_id.'&type=accept" class="btn btn-success btn-flat pull-left" data-dismiss="modal" disabled><i class="fa fa-edit"></i> ZPC Accept KPI</a>';
-                                    }
-                                  }
-                                
-                                ?>
+                            if(strpos($user_role['Permission'], 'mon_accept') !== false){ ?>
+                               <hr />
+                              <div class="col-md-12">
+                                <h5>ZPC ACCEPTANCE SECTION</h5>
+                                <!-- <input name="projid" value="<?php  echo $get_id; ?>" type="hidden" /> -->
+                                <div class="col-md-4">
+                                  <div class="form-group">
+                                    <label>Accepted By :</label>
+                                    <input type="text" class="form-control" name="accept_by" value ="<?php echo $accept_by; ?>" style="width: 100%;"  readonly/>
+                                  </div>
+                                </div>
+                                <div class="col-md-4">
+                                      <div class="form-group">
+                                          <label> Accepted Date:</label>
+                                          <input type="text" class="form-control" name="date_accept" value ="<?php echo $accept_on; ?>" style="width: 100%;"  readonly/>
+                                      </div>
+                                </div>
+                                <div class="col-md-4">
+                                      <div class="form-group">
+                                          <label>Action :</label>
+                                          <select class="form-control" name="accept_action" style="width: 100%;" required>
+                                            <option value=''>Select...</option>
+                                            <?php
+                                              if($accept_status == 0){
+                                                echo "<option value='0' selected>Reject</option><option value='1'>Approve</option>";
+                                              } elseif($accept_status == 1) {
+                                                echo "<option value='1' selected>Approve</option> <option value='0'>Reject</option>";
+                                              } else {
+                                                echo "<option value='1'>Approve</option> <option value='0'>Reject</option>";
+                                              }
+                                            ?>
+                                          </select>
+                                      </div>
+                                </div>
+                                <div class="col-md-12">
+                                      <div class="form-group">
+                                          <label> Comment :</label>
+                                          <textarea class="form-control" style="width: 100%;" row="5" col="10" name="accept_reason" value="<?php echo $accept_comment; ?>"><?php echo $accept_comment; ?></textarea>
+                                      </div>
+                                </div>
+                              </div>
+                           <?php }
+                             if(strpos($user_role['Permission'], 'mon_submit') !== false){
+                              if($submit_status == 1) {
+                                // if($_GET['type'] == 'submit') {
+                                  echo '&nbsp;<a href="m&e.php?id='.$get_id.'" class="btn bg-navy btn-flat pull-left"><i class="fa fa-arrow-left"></i> Back</a>';
+                                   if($submit_status == 2 || $submit_status == 0){
+                                    echo '&nbsp;<button type="submit" class="btn btn-primary btn-flat pull-left" name="submitprojectkra"><i class="fa fa-save"></i> Submit</button>';
+                                   } else {
+                                    echo '&nbsp;<button type="submit" class="btn btn-primary btn-flat pull-left" name="submitprojectkra" disabled><i class="fa fa-save"></i> Submit</button>';
+                                   }
+                                // }
+                              } else {
+                                echo '&nbsp;<button type="submit" class="btn btn-primary btn-flat pull-left" name="addprojectkra"><i class="fa fa-save"></i> Save</button>';
+                              }
+                              
+                            }
+                            if(strpos($user_role['Permission'], 'mon_submit') !== false){
+                              if($submit_status == 0 || $submit_status == 2){
+                                echo '&nbsp;<a href="m&e.php?id='.$get_id.'&type=submit" class="btn btn-success btn-flat pull-left" data-dismiss="modal"><i class="fa fa-edit"></i> Submit Plan</a>';
+                              } else {
+                                echo '&nbsp;<a href="m&e.php?id='.$get_id.'&type=submit" class="btn btn-success btn-flat pull-left" data-dismiss="modal" disabled><i class="fa fa-edit"></i> Submit Plan</a>';
+                              }
+                            }
+
+                            if(strpos($user_role['Permission'], 'mon_verify') !== false){
+                              if($approve_status == 0 || $approve_status == 2){
+                                  echo '&nbsp;<button type="submit" name="kpimonapprove" class="btn btn-success btn-flat pull-left" data-dismiss="modal"><i class="fa fa-edit"></i> Approve KPI</button>';
+                              } else {
+                                  echo '&nbsp;<a href="assign_kra?id='.$get_id.'&type=approve" class="btn btn-success btn-flat pull-left" data-dismiss="modal" disabled><i class="fa fa-edit"></i> Approve KPI</a>';
+                              }
+                            }
+
+                            if(strpos($user_role['Permission'], 'mon_confirm') !== false){
+                              if($confirm_status == 0 || $confirm_status == 2){
+                                echo '&nbsp;<button type="submit" name="kpimonconfirm" class="btn btn-success btn-flat pull-left" data-dismiss="modal"><i class="fa fa-edit"></i>Confirm KPI</button>';
+                              } else {
+                                echo '&nbsp;<button type="submit" name="kpimonconfirm" class="btn btn-success btn-flat pull-left" data-dismiss="modal" disabled><i class="fa fa-edit"></i>Confirm KPI</button>';
+                              }
+                            }
+
+                            if(strpos($user_role['Permission'], 'mon_accept') !== false){
+                              if($accept_status == 0 || $accept_status == 2){
+                                    echo '&nbsp;<button type="submit" name="kpimonaccept" class="btn btn-success btn-flat pull-left" data-dismiss="modal"><i class="fa fa-edit"></i>ZPC Accept KPI</button>';
+                              } else {
+                                echo '&nbsp;<a href="assign_kra?id='.$get_id.'&type=accept" class="btn btn-success btn-flat pull-left" data-dismiss="modal" disabled><i class="fa fa-edit"></i> ZPC Accept KPI</a>';
+                              }
+                            }
+                          ?>    
                                 </div>
                        </form>
                        
@@ -353,12 +548,14 @@ function ShowmeIndicator(str) {
                   <table id="example1" class="table table-bordered">
                 <thead>
                   <th>S.N</th>
-                  <th>Description Type</th>
-                  <th>Description</th>
-                  <th>Indicator</th>
+                  <th>Plan Type</th>
+                  <th>KPI</th>
+                  <th>Definition</th>
                   <th>Target</th>
                   <th>Baseline</th>
                   <th>Source Of Data</th>
+                  <th>Frequency</th>
+                  <th>Responsible</th>
                   <th>Action</th>
                 </thead>
                 <tbody>
@@ -374,17 +571,26 @@ function ShowmeIndicator(str) {
                     $result = mysqli_query($conn, $query) or die("Error : ".mysqli_error($conn));
                     $num = 0;
                     while($row = mysqli_fetch_array($result)) {
+                        $idget = $row['Indicator'];
+                        $sqlget = "SELECT * FROM keyarea WHERE IDNo='$idget'";
+                        $resultget = mysqli_query($conn, $sqlget) or die("Error : ".mysqli_error($conn));
+                        if($rowget = mysqli_fetch_array($resultget)) {
+                          $idget = $rowget['KeyArea'];
+                        }
+
                         $num +=1;
                         echo "<tr>
                             <td>".$num."</td>
                             <td>".$row['Description']."</td>
-                            <td>".$row['Value']."</td>
-                            <td>".$row['Indicator']."</td>
-                            <td>".$row['Target']."</td>
+                            <td>".$idget."</td>
+                            <td>".$row['Definition']."</td>
                             <td>".$row['Baseline']."</td>
-                            <td>".$row['Source']."</td>";
-    echo "<td>
-                                       
+                            <td>".$row['Target']."</td>
+                            <td>".$row['Source']."</td>
+                            <td>".$row['Frequency']."</td>
+                            <td>".$row['Responsible']."</td>";
+                          echo "<td>
+                              
                                         <a href='m&e.php?id=".$get_id."&plan=".$row['IDp']."&update' class='btn btn-success btn-sm reports btn-flat'><i class='fa fa-edit'></i> Edit</a>
                                         <button class='btn btn-danger btn-sm deleteproj_plan btn-flat' data-id=".$row['IDp']."><i class='fa fa-trash'></i> Delete</button>
                                       
