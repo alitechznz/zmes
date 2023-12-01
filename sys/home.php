@@ -601,6 +601,9 @@
               <span class="info-box-text">Total Budget (TZS)</span>
                    <?php
                          include 'includes/conn.php';
+                         // Set error reporting level to exclude warnings
+                          error_reporting(E_ALL & ~E_WARNING);
+                          
                          $num = 0;
                          $total_budget = 0;
                          $total_disbursed = 0;
@@ -615,9 +618,19 @@
                             INNER JOIN projecttb ON project_financing.Project = projecttb.ID
                             WHERE project_financing.Project='$project'";
                             $result = mysqli_query($conn, $sql);
+                            $get_total_b = 0;
+                            $get_total_d = 0;
                             while($row = mysqli_fetch_array($result)){
-                                $total_budget = $total_budget + $row['TotalAmount'];
-                                $total_disbursed = $total_disbursed + $row['Disbursed'];
+                                $get_total_b = $row['TotalAmount'];
+                                $get_total_d = $row['Disbursed'];
+                                if($get_total_b){
+                                  $total_budget = $total_budget + $get_total_b;
+                                }
+
+                                if(is_numeric($get_total_d)){
+                                  $total_disbursed = $total_disbursed + $get_total_d;
+                                }
+                               
                             }
 
                             $total_budget = number_format($total_budget, 2, '.', ',');
