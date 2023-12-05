@@ -79,20 +79,17 @@
       <?php include 'progress.php'; ?>
       
         <?php
-      include 'includes/conn.php';
-$ptitle = "";
-$status = "";
-$query = "SELECT * FROM `projecttb` WHERE `ID`='$getid'";
-$result = mysqli_query($conn, $query) or die("Error : " . mysqli_error($conn));
-$num = 0;
-if($row = mysqli_fetch_array($result)) {
-    $ptitle = $row['pTitle'];
-    $status = $row['Status'];
-}
-
-
-
-?>  
+            include 'includes/conn.php';
+            $ptitle = "";
+            $status = "";
+            $query = "SELECT * FROM `projecttb` WHERE `ID`='$getid'";
+            $result = mysqli_query($conn, $query) or die("Error : " . mysqli_error($conn));
+            $num = 0;
+            if($row = mysqli_fetch_array($result)) {
+                $ptitle = $row['pTitle'];
+                $status = $row['Status'];
+            }
+        ?>  
       <!-- ------->
     <div class="row">
         <div class="col-xs-12">

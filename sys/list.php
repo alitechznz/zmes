@@ -71,17 +71,21 @@
                                     $user_org = $user['Organization'];
                                     $user_roles = $user['Role'];
 
-                                    //$query = "SELECT * FROM `projecttb` WHERE `Group_ID`='$groupid' AND `pType` ='Project'";
-                                    // $user_id = $_SESSION['user'];
-                                    // $user_org = $_SESSION['user_org'];
+                                    $queryr = "SELECT * FROM `roletb` WHERE `role_ID`='$user_roles'";
+                                    $resultr = mysqli_query($conn, $queryr) or die("Error : ".mysqli_error($conn));
+                                    if($rowr = mysqli_fetch_array($resultr)) {	
+                                      $user_roles = $rowr['Name'];
+                                    }
+                                    
                                     
                                   if($user_roles == "Focal Person" || $user_roles == "FOCAL PERSON" || $user_roles =="Principle Secretary" || $user_roles =="DPPR") {
+                                   
                                     $query = "SELECT * FROM `projecttb` WHERE `pType`='Project' AND `project_org`='$user_org'";
-                                    
                                   } else {
-                                    $query = "SELECT * FROM `projecttb` WHERE `pType` ='Project'";
+                                      $query = "SELECT * FROM `projecttb` WHERE `pType` ='Project'";
                                   }
-    
+                                  echo $query;
+                                  exit(); 
                                       
                                     $result = mysqli_query($conn, $query) or die("Error : ".mysqli_error($conn));
                                     $num = 0;

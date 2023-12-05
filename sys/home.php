@@ -31,6 +31,8 @@
 
     <!-- Main content -->
     <?php 
+      //  echo $user_role['Name'];
+      //  exit();
        if(strpos($user_role['Permission'], 'audit_add') !== false){
     ?>
         <section class="content">
@@ -603,7 +605,7 @@
                          include 'includes/conn.php';
                          // Set error reporting level to exclude warnings
                           error_reporting(E_ALL & ~E_WARNING);
-                          
+
                          $num = 0;
                          $total_budget = 0;
                          $total_disbursed = 0;

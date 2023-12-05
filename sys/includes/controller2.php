@@ -2271,9 +2271,18 @@ elseif(isset($_POST['change_password'])){
             header("location: ../change_password.php");	
         }else{
             $new_pdf = md5($password);
+            // Generate a unique verification code (you can use a library to generate secure tokens)
+            $verificationCode = bin2hex(random_bytes(16));
+            // Store the verification code in your database along with user details
+            // Send a verification email to the user
+            $subject = 'Verify Your Email';
+            $message = "Click the following link to verify your email: http://yourwebsite.com/verify.php?code=$verificationCode";
+            $headers = 'From: engineerbably@gmail.com';
+            mail($email, $subject, $message, $headers);
+
             $sql ="UPDATE `userinfo` SET `Password`='$new_pdf' WHERE `Email`='$email'";
             	if (mysqli_query($conn, $sql)) {
-            	    $_SESSION['error'] = "Password is successfully changed!";
+            	    $_SESSION['success'] = "Password is successfully changed!";
                     $_SESSION['action'] = 'Changed a password';
                     AuditActivity($_SESSION['page'], $_SESSION['action'], $_SESSION['user']);
                     header("location: ../home.php");	

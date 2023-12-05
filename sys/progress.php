@@ -5,7 +5,7 @@
 				<div class="col-md-3"></div>
 				
 		                	<?php 
-		                	$getid =0;
+		                			$getid =0;
 		                	       if(isset($_GET['xyz'])){
 		                	           $getid =$_GET['xyz'];
 		                	       } else {
